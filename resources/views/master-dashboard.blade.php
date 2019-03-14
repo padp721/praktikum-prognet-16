@@ -41,7 +41,7 @@
 			<!-- start: header -->
 			<header class="header">
 				<div class="logo-container">
-					<a href="#" class="logo">
+					<a href="{{route('dashboard')}}" class="logo">
 						<img src="{!! asset('dashboard-assets/images/logo.png')!!}" height="35" alt="Porto Admin" />
 					</a>
 					<div class="visible-xs toggle-sidebar-left" data-toggle-class="sidebar-left-opened" data-target="html" data-fire-event="sidebar-left-opened">
@@ -51,15 +51,6 @@
 			
 				<!-- start: search & user box -->
 				<div class="header-right">
-			
-					<form action="#" class="search nav-form">
-						<div class="input-group input-search">
-							<input type="text" class="form-control" name="q" id="q" placeholder="Search...">
-							<span class="input-group-btn">
-								<button class="btn btn-default" type="submit"><i class="fa fa-search"></i></button>
-							</span>
-						</div>
-					</form>
 			
 					<span class="separator"></span>
 			
@@ -125,7 +116,7 @@
 								<img src="{!! asset('dashboard-assets/images/!logged-user.jpg')!!}" alt="Joseph Doe" class="img-circle" data-lock-picture="{!! asset('dashboard-assets/images/!logged-user.jpg')!!}" />
 							</figure>
 							<div class="profile-info" data-lock-name="John Doe" data-lock-email="johndoe@okler.com">
-								<span class="name">John Doe Junior</span>
+								<span class="name">Admin -Stevie</span>
 								<span class="role">administrator</span>
 							</div>
 			
@@ -172,39 +163,46 @@
 											<span>Dashboard</span>
 										</a>
 									</li>
-									<li>
-										<a href="#">
-											<i class="fa fa-envelope" aria-hidden="true"></i>
-											<span>Mailbox</span>
-										</a>
-									</li>
 									<li class="nav-parent">
 										<a>
-											<i class="fa fa-copy" aria-hidden="true"></i>
-											<span>Pages</span>
+											<i class="fa fa-archive" aria-hidden="true"></i>
+											<span>Products</span>
 										</a>
 										<ul class="nav nav-children">
 											<li>
 												<a href="#">
-													 Sign Up
+													 Product List
 												</a>
 											</li>
 											<li>
 												<a href="#">
-													 Sign In
+													 Product Categories
 												</a>
 											</li>
 											<li>
 												<a href="#">
-													 Recover Password
-												</a>
-											</li>
-											<li>
-												<a href="#">
-													 Locked Screen
+													 Products Reviews
 												</a>
 											</li>
 										</ul>
+									</li>
+									<li>
+										<a href="#">
+											<i class="fa fa-exchange" aria-hidden="true"></i>
+											<span>Transaction</span>
+										</a>
+									</li>
+									<li>
+										<a href="#">
+											<i class="fa fa-truck" aria-hidden="true"></i>
+											<span>Couriers</span>
+										</a>
+									</li>
+									<li>
+										<a href="#">
+											<i class="fa fa-users" aria-hidden="true"></i>
+											<span>Users</span>
+										</a>
 									</li>
 								</ul>
 							</nav>
