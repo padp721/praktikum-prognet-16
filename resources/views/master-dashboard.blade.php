@@ -5,7 +5,7 @@
 		<!-- Basic -->
 		<meta charset="UTF-8">
 
-		<title>Menu Collapsed Layout | Okler Themes | Porto-Admin</title>
+		<title>@yield ('title')</title>
 		<meta name="keywords" content="HTML5 Admin Template" />
 		<meta name="description" content="Porto Admin - Responsive HTML5 Template">
 		<meta name="author" content="okler.net">
@@ -167,7 +167,7 @@
 							<nav id="menu" class="nav-main" role="navigation">
 								<ul class="nav nav-main">
 									<li>
-										<a href="#">
+										<a href="{{route('dashboard')}}">
 											<i class="fa fa-home" aria-hidden="true"></i>
 											<span>Dashboard</span>
 										</a>
@@ -229,7 +229,7 @@
 					</header>
 
 					<!-- start: page -->
-
+					@yield ('content')
 					<!-- end: page -->
 				</section>
 			</div>
