@@ -41,7 +41,7 @@
 			<!-- start: header -->
 			<header class="header">
 				<div class="logo-container">
-					<a href="{{route('dashboard')}}" class="logo">
+					<a href="{{route('admin.dashboard')}}" class="logo">
 						<img src="{!! asset('dashboard-assets/images/logo.png')!!}" height="35" alt="Porto Admin" />
 					</a>
 					<div class="visible-xs toggle-sidebar-left" data-toggle-class="sidebar-left-opened" data-target="html" data-fire-event="sidebar-left-opened">
@@ -130,7 +130,7 @@
 									<a role="menuitem" tabindex="-1" href="#"><i class="fa fa-user"></i> My Profile</a>
 								</li>
 								<li>
-									<a role="menuitem" tabindex="-1" href="#"><i class="fa fa-power-off"></i> Logout</a>
+									<a role="menuitem" tabindex="-1" href="{{route('admin.logout')}}"><i class="fa fa-power-off"></i> Logout</a>
 								</li>
 							</ul>
 						</div>
@@ -158,7 +158,7 @@
 							<nav id="menu" class="nav-main" role="navigation">
 								<ul class="nav nav-main">
 									<li>
-										<a href="{{route('dashboard')}}">
+										<a href="{{route('admin.dashboard')}}">
 											<i class="fa fa-home" aria-hidden="true"></i>
 											<span>Dashboard</span>
 										</a>
