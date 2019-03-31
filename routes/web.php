@@ -11,10 +11,11 @@
 |
 */
 
-Route::get('/', function (){
-    return view('welcome');
-});
+// Route::get('/', function (){
+//     return view('welcome');
+// });
 
+Route::get('/','ShopController@index')->name('index');
 
 Auth::routes();
 
