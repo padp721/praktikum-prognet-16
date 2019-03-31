@@ -64,8 +64,23 @@
 
             <ul class="nav-shop">
               <li class="nav-item"><button><i class="ti-search"></i></button></li>
-              <li class="nav-item"><button><i class="ti-shopping-cart"></i><span class="nav-shop__circle">3</span></button> </li>
-              <li class="nav-item"><a class="button button-header" href="#">Buy Now</a></li>
+							<li class="nav-item"><button><i class="ti-shopping-cart"></i><span class="nav-shop__circle">3</span></button> </li>
+            </ul>
+            <ul class="nav navbar-nav menu_nav ml-auto ml-auto">
+							@if (Route::has('login'))
+								@auth
+									<li class="nav-item submenu dropdown">
+										<a class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+									aria-expanded="false" href="#">{{$user->name}}<i class="fas fa-caret-down fa-fw"></i></a>
+										<ul class="dropdown-menu">
+											<li class="nav-item"><a class="nav-link" href="#">Edit Account</a></li>
+											<li class="nav-item"><a class="nav-link" href="{{route('user.logout')}}">Logout</a></li>
+										</ul>
+									</li>
+								@else
+									<li class="nav-item"><a class="button button-header" href="{{route('login')}}">Login</a></li>
+								@endauth
+							@endif
             </ul>
           </div>
         </div>
