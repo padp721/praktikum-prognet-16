@@ -15,11 +15,11 @@
 //     return view('welcome');
 // });
 
-Route::get('/','ShopController@index')->name('index');
+// Route::get('/home', 'HomeController@index')->name('home');
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/','ShopController@index')->name('index');
 Route::get('/user/logout','Auth\LoginController@logoutUser')->name('user.logout');
 
 Route::group(['prefix' => 'admin'], function(){
