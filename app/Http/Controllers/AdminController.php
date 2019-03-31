@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AdminController extends Controller
 {
@@ -21,7 +22,9 @@ class AdminController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function dashboard(){
-        return view('admin/dashboard');
+    public function index(){
+        $user = Auth::user();
+        // echo $user;
+        return view('admin/dashboard', ['user'=>$user]);
     }
 }

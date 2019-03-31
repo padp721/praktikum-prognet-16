@@ -27,9 +27,9 @@ class ShopController extends Controller
         if (Auth::check()) {
             $user = Auth::user();
             
+            // echo $user;
             return view('shop/home', ['user'=>$user]);
         }
-        // echo $user;
         return view('shop/home');
     }
 

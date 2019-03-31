@@ -116,7 +116,7 @@
 								<img src="{!! asset('dashboard-assets/images/!logged-user.jpg')!!}" alt="Joseph Doe" class="img-circle" data-lock-picture="{!! asset('dashboard-assets/images/!logged-user.jpg')!!}" />
 							</figure>
 							<div class="profile-info" data-lock-name="John Doe" data-lock-email="johndoe@okler.com">
-								<span class="name">Admin -Stevie</span>
+								<span class="name">{{$user->name}}</span>
 								<span class="role">administrator</span>
 							</div>
 			
