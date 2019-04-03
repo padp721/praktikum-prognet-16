@@ -27,4 +27,23 @@ Route::group(['prefix' => 'admin'], function(){
     Route::post('/login', 'AdminAuth\LoginController@doLogin')->name('admin.login.submit');
     Route::get('/logout','AdminAuth\LoginController@logout')->name('admin.logout');
     Route::get('/', 'AdminController@index')->name('admin.dashboard');
+
+    Route::resource('/user','Admin\AdminUserController', [
+        'names' => [
+            'index' => 'admin.user'
+        ]
+    ]);
+
+    Route::resource('/courier','Admin\AdminCourierController', [
+        'names' => [
+            'index' => 'admin.courier'
+        ]
+    ]);
+
+    Route::resource('/transaction','Admin\AdminTransactionController', [
+        'names' => [
+            'index' => 'admin.transaction'
+        ]
+    ]);
+    
 });

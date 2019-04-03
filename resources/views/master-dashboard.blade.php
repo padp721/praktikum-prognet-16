@@ -187,19 +187,19 @@
 										</ul>
 									</li>
 									<li>
-										<a href="#">
+										<a href="{{route('admin.transaction')}}">
 											<i class="fa fa-exchange" aria-hidden="true"></i>
 											<span>Transaction</span>
 										</a>
 									</li>
 									<li>
-										<a href="#">
+										<a href="{{route('admin.courier')}}">
 											<i class="fa fa-truck" aria-hidden="true"></i>
 											<span>Couriers</span>
 										</a>
 									</li>
 									<li>
-										<a href="#">
+										<a href="{{route('admin.user')}}">
 											<i class="fa fa-users" aria-hidden="true"></i>
 											<span>Users</span>
 										</a>
@@ -212,24 +212,9 @@
 				</aside>
 				<!-- end: sidebar -->
 
-				<section role="main" class="content-body">
-					<header class="page-header">
-						<h2>Dashboard</h2>
-					
-						<div class="right-wrapper pull-right">
-							<ol class="breadcrumbs">
-								<li>
-									<i class="fa fa-home"></i>
-								</li>
-							</ol>
-							<a class="sidebar-right-toggle" data-open="sidebar-right"><i class="fa fa-chevron-left"></i></a>
-						</div>
-					</header>
-
-					<!-- start: page -->
-					@yield ('content')
+				@yield ('content')
 					<!-- end: page -->
-				</section>
+			
 			</div>
 
 			<aside id="sidebar-right" class="sidebar-right">
