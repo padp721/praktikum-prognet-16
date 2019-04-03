@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Courier;
 
 class AdminCourierController extends Controller
 {
@@ -22,7 +23,8 @@ class AdminCourierController extends Controller
     public function index()
     {
         $user = Auth::user();
-        return view('admin/Courier/courier', ['user'=>$user]);
+        $data_courier = Courier::paginate(5);
+        return view('admin/Courier/courier', ['user'=>$user , 'data_courier'=>$data_courier]);
     }
 
     /**
@@ -43,7 +45,8 @@ class AdminCourierController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Courier::create($request->all());
+        return redirect(route('admin.courier'));
     }
 
     /**
