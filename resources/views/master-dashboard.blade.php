@@ -22,6 +22,11 @@
 		<link rel="stylesheet" href="{!! asset('dashboard-assets/vendor/magnific-popup/magnific-popup.css')!!}" />
 		<link rel="stylesheet" href="{!! asset('dashboard-assets/vendor/bootstrap-datepicker/css/datepicker3.css')!!}" />
 
+		<!-- Specific Page Vendor CSS -->
+		<link rel="stylesheet" href="{!! asset('dashboard-assets/vendor/pnotify/pnotify.custom.css')!!}" />
+		<link rel="stylesheet" href="{!! asset('dashboard-assets/vendor/select2/select2.css')!!}" />
+		<link rel="stylesheet" href="{!! asset('dashboard-assets/vendor/jquery-datatables-bs3/assets/css/datatables.css')!!}" />
+
 		<!-- Theme CSS -->
 		<link rel="stylesheet" href="{!! asset('dashboard-assets/stylesheets/theme.css')!!}" />
 
@@ -236,6 +241,7 @@
 				</div>
 			</aside>
 			<!-- Vendor -->
+			<script src="{!! asset('js/app.js')!!}"></script>
 			<script src="{!! asset('dashboard-assets/vendor/jquery/jquery.js')!!}"></script>
 			<script src="{!! asset('dashboard-assets/vendor/jquery-browser-mobile/jquery.browser.mobile.js')!!}"></script>
 			<script src="{!! asset('dashboard-assets/vendor/bootstrap/js/bootstrap.js')!!}"></script>
@@ -245,6 +251,11 @@
 			<script src="{!! asset('dashboard-assets/vendor/jquery-placeholder/jquery.placeholder.js')!!}"></script>
 			
 			<!-- Specific Page Vendor -->
+			<script src="{!! asset('dashboard-assets/vendor/pnotify/pnotify.custom.js')!!}"></script>
+			<script src="{!! asset('dashboard-assets/vendor/select2/select2.js')!!}"></script>
+			<script src="{!! asset('dashboard-assets/vendor/jquery-datatables/media/js/jquery.dataTables.js')!!}"></script>
+			<script src="{!! asset('dashboard-assets/vendor/jquery-datatables/extras/TableTools/js/dataTables.tableTools.min.js')!!}"></script>
+			<script src="{!! asset('dashboard-assets/vendor/jquery-datatables-bs3/assets/js/datatables.js')!!}"></script>
 			
 			<!-- Theme Base, Components and Settings -->
 			<script src="{!! asset('dashboard-assets/javascripts/theme.js')!!}"></script>
@@ -254,6 +265,26 @@
 			
 			<!-- Theme Initialization Files -->
 			<script src="{!! asset('dashboard-assets/javascripts/theme.init.js')!!}"></script>
+
+			<!-- Examples -->
+			<script src="{!! asset('dashboard-assets/javascripts/ui-elements/examples.modals.js')!!}"></script>
+			<script src="{!! asset('dashboard-assets/javascripts/tables/examples.datatables.default.js')!!}"></script>
+			<script src="{!! asset('dashboard-assets/javascripts/tables/examples.datatables.row.with.details.js')!!}"></script>
+			<script src="{!! asset('dashboard-assets/javascripts/tables/examples.datatables.tabletools.js')!!}"></script>
+
+			{{-- Modal Edit --}}
+			<script>
+				$('#modalEditCourier').on('show.bs.modal', function (event) {
+					var button = $(event.relatedTarget)
+					var courier = button.data('mycourier')
+					var id = button.data('idcourier')
+					// If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+					// Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+					var modal = $(this)
+					modal.find('.modal-body #courier').val(courier)
+					modal.find('.modal-body #idcourier').val(id)
+				})
+			</script>
 
 		</section>
 	</body>

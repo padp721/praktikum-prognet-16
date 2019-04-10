@@ -27,8 +27,8 @@
                     <h2 class="panel-title">Courier Data</h2>
                 </header>
                 <div class="panel-body">
-                    <div class="table-responsive">
-					    <table class="table table-hover mb-none">
+                    <div class="">
+					    <table class="table table-bordered table-hover mb-none" id="datatable-default">
 							<thead>
 								<tr>
 						    		<th>#</th>
@@ -44,10 +44,10 @@
                                 @else
                                     @foreach ($data_courier as $row)
                                         <tr>
-                                            <td>{{ ($data_courier ->currentpage()-1) * $data_courier ->perpage() + $loop->index + 1 }}</td>
+                                            <td>{{$loop->iteration}}</td>
                                             <td>{{$row->courier}}</td>
-                                            <td class="actions-hover actions-fade">
-										        <a href="#"><i class="fa fa-pencil"></i></a>
+                                            <td class="actions-fade">
+                                                <button class="btn btn-default" data-mycourier="{{$row->courier}}" data-idcourier="{{$row->id}}" data-toggle="modal" data-target="#modalEditCourier"><i class="fa fa-pencil"></i></button>
 										        <a href="#" class="delete-row"><i class="fa fa-trash-o"></i></a>
 									        </td>
                                         </tr>
@@ -55,7 +55,6 @@
                                 @endif
                             </tbody>
                         </table>
-                        {{ $data_courier->links() }} 
 					</div>
                 </div>
             </section>
@@ -74,7 +73,7 @@
                         <div class="form-group">
 							<label class="col-md-3 control-label" for="inputDefault">Courier Name</label>
 							<div class="col-md-8">
-								<input type="text" class="form-control" id="inputDefault" name="courier" required>
+								<input type="text" class="form-control" id="inputDefault" name="courier" placeholder="Type courier name..." required>
 							</div>
 						</div>
                     </div>
@@ -91,5 +90,34 @@
         </div>
     </div>
 </section>
+
+<!-- Modal Form -->
+<div class="modal fade" id="modalEditCourier" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="myModalLabel">Edit Courier</h4>
+            </div>
+            <div class="modal-body">
+                <form id="demo-form" class="form-horizontal mb-lg" novalidate="novalidate" method="POST" action="{{route('courier.update','do-update')}}">
+                    @method('PATCH')
+                    @csrf
+                    <div class="form-group mt-lg">
+                        <label class="col-sm-3 control-label">Courier Name</label>
+                        <div class="col-sm-8">
+                            <input type="hidden" name="idcourier" id="idcourier">
+                            <input type="text" name="courier" id="courier" class="form-control" placeholder="Type courier name..." required />
+                        </div>
+                    </div>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary">Confirm</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </form>
+            </div>
+        </div>
+    </div>
+</div>
 
 @endsection

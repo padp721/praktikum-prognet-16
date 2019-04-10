@@ -23,7 +23,7 @@ class AdminCourierController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $data_courier = Courier::paginate(5);
+        $data_courier = Courier::get();
         return view('admin/Courier/courier', ['user'=>$user , 'data_courier'=>$data_courier]);
     }
 
@@ -78,9 +78,11 @@ class AdminCourierController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        $courier = Courier::findOrFail($request->idcourier);
+        $courier->update($request->all());
+        return back();
     }
 
     /**
