@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Courier;
+use App\Transaction;
 
 class AdminCourierController extends Controller
 {
@@ -45,8 +46,14 @@ class AdminCourierController extends Controller
      */
     public function store(Request $request)
     {
-        Courier::create($request->all());
-        return redirect(route('admin.courier'));
+        $check = Courier::where('courier',$request->courier)->first();
+        if ($check){
+            return back()->with('fail','Courier already exist!');
+        }
+        else{
+            Courier::create($request->all());
+            return back()->with('success','Data has been submitted!');
+        }
     }
 
     /**
@@ -80,9 +87,15 @@ class AdminCourierController extends Controller
      */
     public function update(Request $request)
     {
-        $courier = Courier::findOrFail($request->idcourier);
-        $courier->update($request->all());
-        return back();
+        $check = Courier::where('courier',$request->courier)->first();
+        if ($check){
+            return back()->with('fail','Courier already exist!');
+        }
+        else{
+            $courier = Courier::findOrFail($request->idcourier);
+            $courier->update($request->all());
+            return back()->with('success','Data has been edited!');
+        }
     }
 
     /**
@@ -91,8 +104,16 @@ class AdminCourierController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        //
+        $check = Transaction::where('courier_id',$request->idcourier)->first();
+        if ($check){
+            return back()->with('fail','Courier is being used in transaction!');
+        }
+        else{
+            $courier = Courier::findOrFail($request->idcourier);
+            $courier->delete();
+            return back()->with('success','Data has been deleted!');
+        }
     }
 }
