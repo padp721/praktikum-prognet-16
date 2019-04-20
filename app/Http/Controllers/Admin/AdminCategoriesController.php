@@ -5,9 +5,9 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Transaction;
+use App\Product_Categories;
 
-class AdminTransactionController extends Controller
+class AdminCategoriesController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -19,11 +19,12 @@ class AdminTransactionController extends Controller
     {
         $this->middleware('auth:admin');
     }
-
+    
     public function index()
     {
         $user = Auth::user();
-        return view('admin/Transaction/transaction', ['user'=>$user]);
+        $data_categories = Product_Categories::get();
+        return view('admin/Product_Categories/product-categories', ['user'=>$user , 'data_categories'=>$data_categories]);
     }
 
     /**
@@ -44,7 +45,8 @@ class AdminTransactionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Product_Categories::create($request->all());
+        return back()->with('success','Data has been submitted!');
     }
 
     /**
@@ -78,7 +80,9 @@ class AdminTransactionController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $categories = Product_Categories::findOrFail($request->idcategories);
+        $categories->update($request->all());
+        return back()->with('success','Data has been edited!');
     }
 
     /**
@@ -87,8 +91,10 @@ class AdminTransactionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        //
+        $categories = Product_Categories::findOrFail($request->idcategories);
+        $categories->delete();
+        return back()->with('success','Data has been deleted!');
     }
 }

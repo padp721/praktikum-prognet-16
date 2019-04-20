@@ -45,5 +45,11 @@ Route::group(['prefix' => 'admin'], function(){
             'index' => 'admin.transaction'
         ]
     ]);
+
+    Route::resource('/categories','Admin\AdminCategoriesController', [
+        'names' => [
+            'index' => 'admin.categories'
+        ]
+    ]);
     
 });

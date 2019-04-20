@@ -293,6 +293,26 @@
 					var modal = $(this)
 					modal.find('.modal-body #idcourier').val(id)
 				})
+
+				$('#modalEditCategories').on('show.bs.modal', function (event) {
+					var button = $(event.relatedTarget)
+					var category = button.data('mycategories')
+					var id = button.data('idcategories')
+					// If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+					// Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+					var modal = $(this)
+					modal.find('.modal-body #category_name').val(category)
+					modal.find('.modal-body #idcategories').val(id)
+				})
+
+				$('#modalDeleteCategories').on('show.bs.modal', function (event) {
+					var button = $(event.relatedTarget)
+					var id = button.data('idcategories')
+					// If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+					// Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+					var modal = $(this)
+					modal.find('.modal-body #idcategories').val(id)
+				})
 			</script>
 
 		</section>
