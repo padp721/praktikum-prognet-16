@@ -46,10 +46,14 @@ Route::group(['prefix' => 'admin'], function(){
         ]
     ]);
 
-    Route::resource('/categories','Admin\AdminCategoriesController', [
+    Route::resource('/product','Admin\AdminProductController', [
+        'names' => [
+            'index' => 'admin.product'
+        ]
+    ]);
+    Route::resource('/product-detail/categories','Admin\AdminCategoriesController', [
         'names' => [
             'index' => 'admin.categories'
         ]
     ]);
-    
 });

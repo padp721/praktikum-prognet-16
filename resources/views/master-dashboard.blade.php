@@ -118,9 +118,9 @@
 					<div id="userbox" class="userbox">
 						<a href="#" data-toggle="dropdown">
 							<figure class="profile-picture">
-								<img src="{!! asset('dashboard-assets/images/!logged-user.jpg')!!}" alt="Joseph Doe" class="img-circle" data-lock-picture="{!! asset('dashboard-assets/images/!logged-user.jpg')!!}" />
+								<img src="{!! asset('dashboard-assets/images/!logged-user.jpg')!!}" class="img-circle" data-lock-picture="{!! asset('dashboard-assets/images/!logged-user.jpg')!!}" />
 							</figure>
-							<div class="profile-info" data-lock-name="John Doe" data-lock-email="johndoe@okler.com">
+							<div class="profile-info">
 								<span class="name">{{$user->name}}</span>
 								<span class="role">administrator</span>
 							</div>
@@ -175,12 +175,12 @@
 										</a>
 										<ul class="nav nav-children">
 											<li>
-												<a href="#">
+												<a href="{{route('admin.product')}}">
 													 Product List
 												</a>
 											</li>
 											<li>
-												<a href="#">
+												<a href="{{route('admin.categories')}}">
 													 Product Categories
 												</a>
 											</li>
@@ -241,7 +241,7 @@
 				</div>
 			</aside>
 			<!-- Vendor -->
-			<script src="{!! asset('js/app.js')!!}"></script>
+			{{-- <script src="{!! asset('js/app.js')!!}"></script> --}}
 			<script src="{!! asset('dashboard-assets/vendor/jquery/jquery.js')!!}"></script>
 			<script src="{!! asset('dashboard-assets/vendor/jquery-browser-mobile/jquery.browser.mobile.js')!!}"></script>
 			<script src="{!! asset('dashboard-assets/vendor/bootstrap/js/bootstrap.js')!!}"></script>
@@ -312,6 +312,15 @@
 					// Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
 					var modal = $(this)
 					modal.find('.modal-body #idcategories').val(id)
+				})
+
+				$('#modalViewDesc').on('show.bs.modal', function (event) {
+					var button = $(event.relatedTarget)
+					var desc = button.data('desc')
+					// If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+					// Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+					var modal = $(this)
+					modal.find('.modal-body #desc').val(desc)
 				})
 			</script>
 
