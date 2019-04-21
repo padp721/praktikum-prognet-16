@@ -125,7 +125,7 @@
                 <h4 class="modal-title" id="myModalLabel">Product Description</h4>
             </div>
             <div class="modal-body">
-                <textarea class="form-control" name="desc" id="desc" rows="5">
+                <textarea class="form-control" name="desc" id="desc" rows="5" readonly>
 
                 </textarea>
             </div>
