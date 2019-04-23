@@ -27,7 +27,7 @@
                     <h2 class="panel-title">Tabel User</h2>
                 </header>
                 <div class="panel-body">
-                    Content.
+                    Content. by agus ari test
                 </div>
             </section>
         </div>
