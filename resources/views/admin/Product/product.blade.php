@@ -40,7 +40,7 @@
                 </header>
                 <div class="panel-body">
                     <div class="">
-                        <button class="btn btn-primary" ><i class="fa fa-plus"></i>&nbsp; Add New Product</button><br><br>
+                        <a href="{{ route('product.create') }}" class="btn btn-primary" ><i class="fa fa-plus"></i>&nbsp; Add New Product</a><br><br>
 					    <table class="table table-bordered table-hover mb-none" id="datatable-default">
 							<thead>
 								<tr>

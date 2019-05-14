@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Product;
+use App\Product_Categories;
 
 class AdminProductController extends Controller
 {
@@ -34,7 +35,9 @@ class AdminProductController extends Controller
      */
     public function create()
     {
-        //
+        $user = Auth::user();
+        $categories = Product_Categories::get();
+        return view('admin/Product/add_product', compact('user','categories'));
     }
 
     /**

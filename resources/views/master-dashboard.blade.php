@@ -26,6 +26,20 @@
 		<link rel="stylesheet" href="{!! asset('dashboard-assets/vendor/pnotify/pnotify.custom.css')!!}" />
 		<link rel="stylesheet" href="{!! asset('dashboard-assets/vendor/select2/select2.css')!!}" />
 		<link rel="stylesheet" href="{!! asset('dashboard-assets/vendor/jquery-datatables-bs3/assets/css/datatables.css')!!}" />
+		<link rel="stylesheet" href="{!! asset('dashboard-assets/vendor/bootstrap-fileupload/bootstrap-fileupload.min.css')!!}" />
+		<link rel="stylesheet" href="{!! asset('dashboard-assets/vendor/jquery-ui/css/ui-lightness/jquery-ui-1.10.4.custom.css')!!}" />
+		<link rel="stylesheet" href="{!! asset('dashboard-assets/vendor/select2/select2.css')!!}" />
+		<link rel="stylesheet" href="{!! asset('dashboard-assets/vendor/bootstrap-multiselect/bootstrap-multiselect.css')!!}" />
+		<link rel="stylesheet" href="{!! asset('dashboard-assets/vendor/bootstrap-tagsinput/bootstrap-tagsinput.css')!!}" />
+		<link rel="stylesheet" href="{!! asset('dashboard-assets/vendor/bootstrap-colorpicker/css/bootstrap-colorpicker.css')!!}" />
+		<link rel="stylesheet" href="{!! asset('dashboard-assets/vendor/bootstrap-timepicker/css/bootstrap-timepicker.css')!!}" />
+		<link rel="stylesheet" href="{!! asset('dashboard-assets/vendor/dropzone/css/basic.css')!!}" />
+		<link rel="stylesheet" href="{!! asset('dashboard-assets/vendor/dropzone/css/dropzone.css')!!}" />
+		<link rel="stylesheet" href="{!! asset('dashboard-assets/vendor/bootstrap-markdown/css/bootstrap-markdown.min.css')!!}" />
+		<link rel="stylesheet" href="{!! asset('dashboard-assets/vendor/summernote/summernote.css')!!}" />
+		<link rel="stylesheet" href="{!! asset('dashboard-assets/vendor/summernote/summernote-bs3.css')!!}" />
+		<link rel="stylesheet" href="{!! asset('dashboard-assets/vendor/codemirror/lib/codemirror.css')!!}" />
+		<link rel="stylesheet" href="{!! asset('dashboard-assets/vendor/codemirror/theme/monokai.css')!!}" />
 
 		<!-- Theme CSS -->
 		<link rel="stylesheet" href="{!! asset('dashboard-assets/stylesheets/theme.css')!!}" />
@@ -256,6 +270,29 @@
 			<script src="{!! asset('dashboard-assets/vendor/jquery-datatables/media/js/jquery.dataTables.js')!!}"></script>
 			<script src="{!! asset('dashboard-assets/vendor/jquery-datatables/extras/TableTools/js/dataTables.tableTools.min.js')!!}"></script>
 			<script src="{!! asset('dashboard-assets/vendor/jquery-datatables-bs3/assets/js/datatables.js')!!}"></script>
+			<script src="{!! asset('dashboard-assets/vendor/jquery-ui/js/jquery-ui-1.10.4.custom.js')!!}"></script>
+			<script src="{!! asset('dashboard-assets/vendor/jquery-ui-touch-punch/jquery.ui.touch-punch.js')!!}"></script>
+			<script src="{!! asset('dashboard-assets/vendor/select2/select2.js')!!}"></script>
+			<script src="{!! asset('dashboard-assets/vendor/bootstrap-multiselect/bootstrap-multiselect.js')!!}"></script>
+			<script src="{!! asset('dashboard-assets/vendor/jquery-maskedinput/jquery.maskedinput.js')!!}"></script>
+			<script src="{!! asset('dashboard-assets/vendor/bootstrap-tagsinput/bootstrap-tagsinput.js')!!}"></script>
+			<script src="{!! asset('dashboard-assets/vendor/bootstrap-colorpicker/js/bootstrap-colorpicker.js')!!}"></script>
+			<script src="{!! asset('dashboard-assets/vendor/bootstrap-timepicker/js/bootstrap-timepicker.js')!!}"></script>
+			<script src="{!! asset('dashboard-assets/vendor/fuelux/js/spinner.js')!!}"></script>
+			<script src="{!! asset('dashboard-assets/vendor/dropzone/dropzone.js')!!}""></script>
+			<script src="{!! asset('dashboard-assets/vendor/bootstrap-markdown/js/markdown.js')!!}"></script>
+			<script src="{!! asset('dashboard-assets/vendor/bootstrap-markdown/js/to-markdown.js')!!}"></script>
+			<script src="{!! asset('dashboard-assets/vendor/bootstrap-markdown/js/bootstrap-markdown.js')!!}"></script>
+			<script src="{!! asset('dashboard-assets/vendor/codemirror/lib/codemirror.js')!!}"></script>
+			<script src="{!! asset('dashboard-assets/vendor/codemirror/addon/selection/active-line.js')!!}"></script>
+			<script src="{!! asset('dashboard-assets/vendor/codemirror/addon/edit/matchbrackets.js')!!}"></script>
+			<script src="{!! asset('dashboard-assets/vendor/codemirror/mode/javascript/javascript.js')!!}"></script>
+			<script src="{!! asset('dashboard-assets/vendor/codemirror/mode/xml/xml.js')!!}"></script>
+			<script src="{!! asset('dashboard-assets/vendor/codemirror/mode/htmlmixed/htmlmixed.js')!!}"></script>
+			<script src="{!! asset('dashboard-assets/vendor/codemirror/mode/css/css.js')!!}"></script>
+			<script src="{!! asset('dashboard-assets/vendor/summernote/summernote.js')!!}"></script>
+			<script src="{!! asset('dashboard-assets/vendor/bootstrap-maxlength/bootstrap-maxlength.js')!!}"></script>
+			<script src="{!! asset('dashboard-assets/vendor/ios7-switch/ios7-switch.js')!!}"></script>
 			
 			<!-- Theme Base, Components and Settings -->
 			<script src="{!! asset('dashboard-assets/javascripts/theme.js')!!}"></script>
@@ -271,9 +308,11 @@
 			<script src="{!! asset('dashboard-assets/javascripts/tables/examples.datatables.default.js')!!}"></script>
 			<script src="{!! asset('dashboard-assets/javascripts/tables/examples.datatables.row.with.details.js')!!}"></script>
 			<script src="{!! asset('dashboard-assets/javascripts/tables/examples.datatables.tabletools.js')!!}"></script>
+			<script src="{!! asset('dashboard-assets/vendor/jquery-autosize/jquery.autosize.js')!!}"></script>
+			<script src="{!! asset('dashboard-assets/vendor/bootstrap-fileupload/bootstrap-fileupload.min.js')!!}"></script>
 
 			{{-- Modal Edit --}}
-			<script>
+			<script type="text/javascript">
 				$('#modalEditCourier').on('show.bs.modal', function (event) {
 					var button = $(event.relatedTarget)
 					var courier = button.data('mycourier')
@@ -322,6 +361,29 @@
 					var modal = $(this)
 					modal.find('.modal-body #desc').val(desc)
 				})
+
+				var rupiah = document.getElementById('price');
+				rupiah.addEventListener('keyup', function(e){
+					rupiah.value = formatRupiah(this.value);
+				});
+		
+				/* Fungsi formatRupiah */
+				function formatRupiah(angka){
+					var number_string = angka.replace(/[^,\d]/g, '').toString(),
+					split   		= number_string.split(','),
+					sisa     		= split[0].length % 3,
+					rupiah     		= split[0].substr(0, sisa),
+					ribuan     		= split[0].substr(sisa).match(/\d{3}/gi);
+		
+					// tambahkan titik jika yang di input sudah menjadi angka ribuan
+					if(ribuan){
+						separator = sisa ? '.' : '';
+						rupiah += separator + ribuan.join('.');
+					}
+		
+					rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
+					return rupiah;
+				}
 			</script>
 
 		</section>
