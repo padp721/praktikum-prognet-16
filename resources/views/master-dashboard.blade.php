@@ -40,6 +40,8 @@
 		<link rel="stylesheet" href="{!! asset('dashboard-assets/vendor/summernote/summernote-bs3.css')!!}" />
 		<link rel="stylesheet" href="{!! asset('dashboard-assets/vendor/codemirror/lib/codemirror.css')!!}" />
 		<link rel="stylesheet" href="{!! asset('dashboard-assets/vendor/codemirror/theme/monokai.css')!!}" />
+		<link rel="stylesheet" href="{!! asset('dashboard-assets/vendor/owl-carousel/owl.carousel.css')!!}" />
+		<link rel="stylesheet" href="{!! asset('dashboard-assets/vendor/owl-carousel/owl.theme.css')!!}" />
 
 		<!-- Theme CSS -->
 		<link rel="stylesheet" href="{!! asset('dashboard-assets/stylesheets/theme.css')!!}" />
@@ -293,6 +295,7 @@
 			<script src="{!! asset('dashboard-assets/vendor/summernote/summernote.js')!!}"></script>
 			<script src="{!! asset('dashboard-assets/vendor/bootstrap-maxlength/bootstrap-maxlength.js')!!}"></script>
 			<script src="{!! asset('dashboard-assets/vendor/ios7-switch/ios7-switch.js')!!}"></script>
+			<script src="{!! asset('dashboard-assets/vendor/owl-carousel/owl.carousel.js')!!}"></script>
 			
 			<!-- Theme Base, Components and Settings -->
 			<script src="{!! asset('dashboard-assets/javascripts/theme.js')!!}"></script>
@@ -362,6 +365,7 @@
 					modal.find('.modal-body #desc').val(desc)
 				})
 
+
 				var rupiah = document.getElementById('price');
 				rupiah.addEventListener('keyup', function(e){
 					rupiah.value = formatRupiah(this.value);
@@ -384,6 +388,7 @@
 					rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
 					return rupiah;
 				}
+
 			</script>
 
 		</section>

@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Product;
 use App\Product_Categories;
+use App\Product_Image;
 
 class AdminProductController extends Controller
 {
@@ -48,7 +49,57 @@ class AdminProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request['price'] = filter_var($request->price, FILTER_SANITIZE_NUMBER_INT);
+
+        $this->validate($request,[
+            'price' => 'numeric|digits_between:1,7',
+            'categories' => 'required',
+            'stock' => 'numeric|digits_between:1,9',
+            'weight' => 'numeric|digits_between:1,3'
+
+        ]);
+
+        if ($request->price < 1) {
+            return back()->with('fail','Price cannot be zero!');
+        }
+        if ($request->stock < 1) {
+            return back()->with('fail','Stock cannot be zero!');
+        }
+
+        $product =  new Product();
+        $product->product_name = $request->product_name;
+        $product->price = $request->price;
+        $product->description = $request->description;
+        $product->product_rate = $request->product_rate;
+        $product->stock = $request->stock;
+        $product->weight = $request->weight;
+        $product->product_rate = 0;
+        $product->save();
+        
+        foreach ($request->categories as $category) {
+            $product->categories()->attach($category);
+        }
+        if($request->hasfile('image_name')){
+            $i = 0;
+
+            $product_id = Product::select('id')->orderBy('id','DESC')->first();
+
+            foreach ($request->file('image_name') as $image) {
+                $folderName = 'product_image';
+                $fileName = $product_id->id.'_'.$i;
+                $fileExtension = $image->getClientOriginalExtension();
+                $fileNameToStorage = $fileName.'_'.time().'.'.$fileExtension;
+                $filePath = $image->storeAs('public/'.$folderName , $fileNameToStorage);
+
+                $images = new Product_Image();
+                $images->product_id = $product_id->id;
+                $images->image_name = $fileNameToStorage;
+                $images->save();
+
+                $i++;
+            }
+        }
+        return redirect('admin/product');
     }
 
     /**
