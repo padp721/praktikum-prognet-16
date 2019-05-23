@@ -51,7 +51,7 @@
 									<th>Description</th>
 									<th>Product Rate</th>
 									<th>Stock</th>
-									<th>Weight</th>
+									<th>Diskon</th>
 									<th>Images</th>
 									<th>Actions</th>
 								</tr>
@@ -77,7 +77,7 @@
                                             <td><button class="btn btn-default" data-desc="{{$row->description}}" data-toggle="modal" data-target="#modalViewDesc">View Description</button></td>
                                             <td>{{$row->product_rate}}</td>
                                             <td>{{$row->stock}}</td>
-                                            <td>{{$row->weight}}</td>
+                                            <td>{{$row->discount}}</td>
                                             <td>
                                                 {{-- @foreach ($row->product_images as $image)
                                                 <img src="{{ asset('/storage/product_image/'.$image->image_name) }}" alt="logo_simple"  width="200px" height="200px">                                                    
