@@ -74,7 +74,7 @@ class AdminProductController extends Controller
         $product->price = $request->price;
         $product->description = $request->description;
         $product->stock = $request->stock;
-        $product->weight = $request->weight;
+        $product->discount = $request->discount;
         $product->product_rate = 0;
         $product->save();
         
@@ -162,7 +162,7 @@ class AdminProductController extends Controller
         $product->price = $request->price;
         $product->description = $request->description;
         $product->stock = $request->stock;
-        $product->weight = $request->weight;
+        $product->discount = $request->discount;
         $product->save();
 
         $product->categories()->detach();

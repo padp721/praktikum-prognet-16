@@ -90,9 +90,9 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-md-3 control-label" for="weight">Berat</label>
+                            <label class="col-md-3 control-label" for="Diskon">Berat</label>
                             <div class="col-md-2">
-                                <input type="number" class="form-control" id="weight" name="weight" value="{{$product->weight}}" min="1" required>
+                                <input type="number" class="form-control" id="discount" name="discount" value="{{$product->weight}}" min="1" required>
                             </div>
                         </div>
                         <div class="form-group">
