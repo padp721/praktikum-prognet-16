@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use App\Product;
 use App\Product_Categories;
 use App\Product_Image;
@@ -55,7 +56,9 @@ class AdminProductController extends Controller
             'price' => 'numeric|digits_between:1,7',
             'categories' => 'required',
             'stock' => 'numeric|digits_between:1,9',
-            'weight' => 'numeric|digits_between:1,3'
+            'weight' => 'numeric|digits_between:1,3',
+            'image_name' => 'required',
+            'image_name.*' => 'max:2048'
 
         ]);
 
@@ -70,7 +73,6 @@ class AdminProductController extends Controller
         $product->product_name = $request->product_name;
         $product->price = $request->price;
         $product->description = $request->description;
-        $product->product_rate = $request->product_rate;
         $product->stock = $request->stock;
         $product->weight = $request->weight;
         $product->product_rate = 0;
@@ -79,6 +81,7 @@ class AdminProductController extends Controller
         foreach ($request->categories as $category) {
             $product->categories()->attach($category);
         }
+
         if($request->hasfile('image_name')){
             $i = 0;
 
@@ -121,7 +124,10 @@ class AdminProductController extends Controller
      */
     public function edit($id)
     {
-        //
+        $user = Auth::user();
+        $categories = Product_Categories::get();
+        $product = Product::find($id);
+        return view('admin/Product/edit_product', compact('user','categories','product'));
     }
 
     /**
@@ -133,7 +139,57 @@ class AdminProductController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request['price'] = filter_var($request->price, FILTER_SANITIZE_NUMBER_INT);
+
+        $this->validate($request,[
+            'price' => 'numeric|digits_between:1,7',
+            'categories' => 'required',
+            'stock' => 'numeric|digits_between:1,9',
+            'weight' => 'numeric|digits_between:1,3',
+            'image_name.*' => 'max:2048'
+
+        ]);
+
+        if ($request->price < 1) {
+            return back()->with('fail','Price cannot be zero!');
+        }
+        if ($request->stock < 1) {
+            return back()->with('fail','Stock cannot be zero!');
+        }
+
+        $product =  Product::find($id);
+        $product->product_name = $request->product_name;
+        $product->price = $request->price;
+        $product->description = $request->description;
+        $product->stock = $request->stock;
+        $product->weight = $request->weight;
+        $product->save();
+
+        $product->categories()->detach();
+        
+        foreach ($request->categories as $category) {
+            $product->categories()->attach($category);
+        }
+
+        if($request->hasfile('image_name')){
+            $i = 0;
+
+            foreach ($request->file('image_name') as $image) {
+                $folderName = 'product_image';
+                $fileName = $id.'_'.$i;
+                $fileExtension = $image->getClientOriginalExtension();
+                $fileNameToStorage = $fileName.'_'.time().'.'.$fileExtension;
+                $filePath = $image->storeAs('public/'.$folderName , $fileNameToStorage);
+
+                $images = new Product_Image();
+                $images->product_id = $id;
+                $images->image_name = $fileNameToStorage;
+                $images->save();
+
+                $i++;
+            }
+        }
+        return redirect('admin/product');
     }
 
     /**
@@ -144,6 +200,23 @@ class AdminProductController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $images = Product_Image::where('product_id',$id)->get();
+        foreach ($images as $image) {
+            Storage::delete('public/product_image/'.$image->image_name);
+            $image->delete();
+        }
+
+        $product =  Product::find($id);
+        $product->categories()->detach();
+        $product->delete();
+        return redirect('admin/product')->with('success','Product successfully deleted!');
+    }
+
+    public function imageDelete($id)
+    {
+        $image = Product_Image::find($id);
+        Storage::delete('public/product_image/'.$image->image_name);
+        $image->delete();
+        return back()->with('success','Image successfully deleted!');
     }
 }

@@ -51,6 +51,7 @@ Route::group(['prefix' => 'admin'], function(){
             'index' => 'admin.product'
         ]
     ]);
+    Route::delete('product/{product}/edit', 'Admin\AdminProductController@imageDelete')->name('product.imageDelete');
     Route::resource('/product-detail/categories','Admin\AdminCategoriesController', [
         'names' => [
             'index' => 'admin.categories'

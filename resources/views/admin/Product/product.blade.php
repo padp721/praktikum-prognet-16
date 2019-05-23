@@ -85,8 +85,8 @@
                                                 <button class="btn btn-default" data-toggle="modal" data-target="#modalViewImages-{{ $row->id}}">View Images</button>
                                             </td>
                                             <td class="actions-fade">
-                                                <button class="btn btn-default" ><i class="fa fa-pencil"></i></button>
-										        <button class="btn btn-danger" ><i class="fa fa-trash-o"></i></button>
+                                                <a href="{{route('product.edit',$row->id)}}" class="btn btn-default" role="button"><i class="fa fa-pencil"></i></a>
+										        <button class="btn btn-danger" data-toggle="modal" data-target="#modalDeleteProduct-{{ $row->id}}"><i class="fa fa-trash-o"></i></button>
 									        </td>
                                         </tr>
                                         
@@ -116,6 +116,35 @@
     </div>
 </div>
 <!-- End Modal Gambars -->
+
+{{-- Modal Delete Product --}}
+<div class="modal fade" id="modalDeleteProduct-{{$row->id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="myModalLabel">Delete Confirmation</h4>
+            </div>
+            <div class="modal-body">
+                <form id="demo-form" class="form-horizontal mb-lg" novalidate="novalidate" method="POST" action="{{route('product.destroy',$row->id)}}">
+                    @method('DELETE')
+                    @csrf
+                    <div class="form-group mt-lg">
+                        <div class="text-center">
+                            <input type="hidden" name="idcategories" id="idcategories">
+                            <h5>Are you sure want to delete this product?</h5>
+                        </div>
+                    </div>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-danger">Yes</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+            </form>
+            </div>
+        </div>
+    </div>
+</div>
+{{-- end modal delete product --}}
 
                                     @endforeach
                                 @endif
