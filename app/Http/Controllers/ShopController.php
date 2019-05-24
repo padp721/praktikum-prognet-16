@@ -31,7 +31,7 @@ class ShopController extends Controller
      */
     
     public function cartcount($id){
-        $cart = Cart::where('user_id',$id)->get();
+        $cart = Cart::where('user_id',$id)->where('status','notyet')->get();
         $cartcount = $cart->count();
         return $cartcount;
     }
@@ -89,7 +89,7 @@ class ShopController extends Controller
             if ($request->has('addcart')) {
                 $cart = new Cart();
                 $cart->user_id = $user->id;
-                $cart->product_id = $request->product_id;
+                $cart->product_id = $id;
                 $cart->qty = $request->qty;
                 $cart->status = 'notyet';
                 $cart->save();
@@ -98,6 +98,14 @@ class ShopController extends Controller
             }
             else {
                 //buy now
+                $cart = new Cart();
+                $cart->user_id = $user->id;
+                $cart->product_id = $id;
+                $cart->qty = $request->qty;
+                $cart->status = 'direct';
+                $cart->save();
+
+                return redirect(route('user.view_checkout'))->with('method','direct');
             }
             
         }
@@ -107,8 +115,8 @@ class ShopController extends Controller
     public function view_cart(){
         if (Auth::check()) {
             $user = Auth::user();
-            $cart = Cart::where('user_id',$user->id)->get();
-            $cartcount = $this->cartcount($user->id);
+            $cart = Cart::where('user_id',$user->id)->where('status','notyet')->get();
+            $cartcount = $cart->count();
 
             return view('shop/cart', compact('cart','user','cartcount'));
         }
@@ -117,7 +125,8 @@ class ShopController extends Controller
 
     public function delete_cart($id){
         $cart = Cart::find($id);
-        $cart->delete();
+        $cart->status = 'cancelled';
+        $cart->save();
 
         return back();
     }
@@ -126,14 +135,14 @@ class ShopController extends Controller
         if (Auth::check()) {
             $i = 0;
             $user = Auth::user();
-            $cart = Cart::where('user_id',$user->id)->get();
+            $cart = Cart::where('user_id',$user->id)->where('status','notyet')->get();
 
             foreach ($cart as $cart_item) {
                 $cart_item->qty = $request->get('qty_'.$i);
                 $cart_item->save();
                 $i++;
             }
-            return redirect(route('user.view_checkout'));
+            return redirect(route('user.view_checkout'))->with('method','cart');
             
         }
         return redirect(route('index'));
@@ -156,8 +165,16 @@ class ShopController extends Controller
     public function bayar(Request $request){
         if (Auth::check()) {
             $user = Auth::user();
+
+            //cek metode pembelian
+            if ($request->method == 'direct') {
+                $carts = Cart::where('user_id',$user->id)->where('status','direct')->get();
+            }
+            elseif ($request->method == 'cart') {
+                $carts = Cart::where('user_id',$user->id)->where('status','notyet')->get();
+            }
+
             $timeout = Carbon::now()->addDays()->setTimezone('Asia/Singapore')->toDateTimeString();
-            $carts = Cart::where('user_id',$user->id)->get();
             $kurir = Courier::find($request->courier_id);
             $shipping_cost = $this->rajaongkir()->checkshipping($request->regency,strtolower($kurir->courier));
 
@@ -179,7 +196,8 @@ class ShopController extends Controller
                 $discount = $full_price*$item->product->discount/100;
                 $final_price = $full_price-$discount;
                 $transaction->products()->attach([$item->product_id  => ['qty'=>$item->qty, 'discount'=>$item->product->discount, 'selling_price'=>$final_price]]);
-                $item->delete();
+                $item->status = 'checkedout';
+                $item->save();
             }
 
             $transaction = Transaction::where('user_id',$user->id)->orderBy('id','desc')->first();

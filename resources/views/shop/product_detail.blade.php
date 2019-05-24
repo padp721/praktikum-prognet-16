@@ -32,8 +32,7 @@
                                     @csrf
                                     <div class="product_count">
                                         Quantity :
-                                        <input type="number" class="form-control" id="qty1" name="qty" min="1" max="{{$product->stock}}" value="1" required>   
-                                        <input type="hidden" id="product_id" name="product_id" value="{{$product->id}}" required>         
+                                        <input type="number" class="form-control" id="qty1" name="qty" min="1" max="{{$product->stock}}" value="1" required>           
                                     </div>
                                     <button type="submit" class="button primary-btn" name="addcart">Add to Cart</button> 
                                 </form>

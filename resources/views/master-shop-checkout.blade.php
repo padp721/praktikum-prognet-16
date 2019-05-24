@@ -36,30 +36,8 @@
                   aria-expanded="false">Shop</a>
                 <ul class="dropdown-menu">
                   <li class="nav-item"><a class="nav-link" href="{{route('user.product_list')}}">All Product</a></li>
-                  <li class="nav-item"><a class="nav-link" href="#">Product Details</a></li>
-                  <li class="nav-item"><a class="nav-link" href="#">Product Checkout</a></li>
-                  <li class="nav-item"><a class="nav-link" href="#">Confirmation</a></li>
-                  <li class="nav-item"><a class="nav-link" href="#">Shopping Cart</a></li>
                 </ul>
 			    </li>
-              <li class="nav-item submenu dropdown">
-                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-                  aria-expanded="false">Blog</a>
-                <ul class="dropdown-menu">
-                  <li class="nav-item"><a class="nav-link" href="#">Blog</a></li>
-                  <li class="nav-item"><a class="nav-link" href="#">Blog Details</a></li>
-                </ul>
-							</li>
-							<li class="nav-item submenu dropdown">
-                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
-                  aria-expanded="false">Pages</a>
-                <ul class="dropdown-menu">
-                  <li class="nav-item"><a class="nav-link" href="#">Login</a></li>
-                  <li class="nav-item"><a class="nav-link" href="#">Register</a></li>
-                  <li class="nav-item"><a class="nav-link" href="#">Tracking</a></li>
-                </ul>
-              </li>
-              <li class="nav-item"><a class="nav-link" href="#">Contact</a></li>
             </ul>
 
             <ul class="nav-shop">

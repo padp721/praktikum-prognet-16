@@ -48,7 +48,10 @@
                           </tr>
                           <tr class="out_button_area">
                               <td class="d-none-l">
-
+                                  @if (session('method'))
+                                    <input type="hidden" name="method" value="{{ session('method') }}">
+                                @endif
+                                  
                               </td>
                               <td class="">
 
