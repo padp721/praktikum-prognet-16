@@ -18,9 +18,26 @@
 // Route::get('/home', 'HomeController@index')->name('home');
 
 Auth::routes();
-
-Route::get('/','ShopController@index')->name('index');
 Route::get('/user/logout','Auth\LoginController@logoutUser')->name('user.logout');
+
+//Test Raja Ongkir
+Route::get('rajaongkir/getprovince','RajaOngkirController@getprovince');
+Route::get('rajaongkir/getcity','RajaOngkirController@getcity');
+Route::get('rajaongkir/checkshipping','RajaOngkirController@checkshipping');
+
+// Shopping
+Route::get('/','ShopController@index')->name('index');
+Route::get('/product_list','ShopController@product_list')->name('user.product_list');
+Route::get('/product/{product}','ShopController@product_detail')->name('user.product_detail');
+Route::post('/product/{product}','ShopController@add_cart')->name('user.add_cart');
+
+// Cart
+Route::get('/cart','ShopController@view_cart')->name('user.view_cart');
+Route::delete('/cart/{cart}','ShopController@delete_cart')->name('user.delete_cart');
+Route::post('/cart','ShopController@checkout')->name('user.checkout');
+Route::get('/checkout','ShopController@view_checkout')->name('user.view_checkout');
+Route::post('/checkout','ShopController@bayar')->name('user.bayar');
+
 
 Route::group(['prefix' => 'admin'], function(){
     Route::get('/login', 'AdminAuth\LoginController@showLoginForm')->name('admin.login');

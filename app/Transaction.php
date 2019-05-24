@@ -14,4 +14,9 @@ class Transaction extends Model
     {
         return $this->belongsTo('App\Courier');
     }
+    
+    public function products()
+    {
+        return $this->belongsToMany('App\Product', 'transaction_details', 'transaction_id', 'product_id');
+    }
 }

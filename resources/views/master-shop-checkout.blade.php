@@ -204,10 +204,20 @@ $("#qty1").on('change',function(){
 	$("#qty2").val($(this).val());
 });
 
-  var msg = "{{Session::get('alert-add-cart')}}";
-  var exist = "{{Session::has('alert-add-cart')}}";
-  if(exist){
-    alert(msg);
-  }
+$("input[name=province]").focusout(function(){
+	var province_id = $(this).val();
+	var city = {!! json_encode($city) !!};
+	$("#regency").empty();
+	for(var i = 0 in city){
+		if (city[i]['province_id'] == province_id) {
+			$('#regency').append($('<option>',
+			{
+				value: city[i]['city_id'],
+				text : city[i]['city_name']
+				}));
+		}
+	}
+	console.log(regency); 
+});
 
 </script>

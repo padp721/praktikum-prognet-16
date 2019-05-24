@@ -56,7 +56,7 @@ class AdminProductController extends Controller
             'price' => 'numeric|digits_between:1,7',
             'categories' => 'required',
             'stock' => 'numeric|digits_between:1,9',
-            'weight' => 'numeric|digits_between:1,3',
+            'discount' => 'numeric|digits_between:1,3',
             'image_name' => 'required',
             'image_name.*' => 'max:2048'
 
@@ -145,7 +145,7 @@ class AdminProductController extends Controller
             'price' => 'numeric|digits_between:1,7',
             'categories' => 'required',
             'stock' => 'numeric|digits_between:1,9',
-            'weight' => 'numeric|digits_between:1,3',
+            'discount' => 'numeric|digits_between:1,3',
             'image_name.*' => 'max:2048'
 
         ]);

@@ -85,7 +85,10 @@
                         <div class="form-group">
                             <label class="col-md-3 control-label" for="discount">Diskon</label>
                             <div class="col-md-2">
-                                <input type="number" class="form-control" id="discount" name="discount" min="1" required>
+                                <div class="input-group mb-md">
+                                    <input type="number" class="form-control" id="discount" name="discount" min="0" required>
+                                    <span class="input-group-addon">%</span>
+                                </div>
                             </div>
                         </div>
                         <div class="form-group">

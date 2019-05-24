@@ -18,4 +18,14 @@ class Product extends Model
     public function product_images(){
         return $this->hasMany('App\Product_Image');
     }
+
+    public function carts()
+    {
+        return $this->hasMany('App\Cart');
+    }
+
+    public function transaction()
+    {
+        return $this->belongsToMany('App\Transaction', 'transaction_details', 'product_id', 'transaction_id');
+    }
 }

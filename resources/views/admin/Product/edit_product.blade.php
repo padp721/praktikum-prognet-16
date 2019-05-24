@@ -85,14 +85,17 @@
                         </div>
                         <div class="form-group">
                             <label class="col-md-3 control-label" for="stock">Stok</label>
-                            <div class="col-md-2">
+                            <div class="col-md-3">
                                 <input type="number" class="form-control" id="stock" name="stock" min="1" value="{{$product->stock}}" required>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-md-3 control-label" for="discount">Diskon</label>
-                            <div class="col-md-2">
-                                <input type="number" class="form-control" id="discount" name="discount" value="{{$product->weight}}" min="1" required>
+                            <div class="col-md-3">
+                                <div class="input-group mb-md">
+                                    <input type="number" class="form-control" id="discount" name="discount" value="{{$product->discount}}" min="0" required>
+                                    <span class="input-group-addon">%</span>
+                                </div>
                             </div>
                         </div>
                         <div class="form-group">
