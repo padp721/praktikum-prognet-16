@@ -69,116 +69,154 @@
 								<div class="col-6">
 									<div class="box_total">
 										<h5>Overall</h5>
-										<h4>4.0</h4>
-										<h6>(03 Reviews)</h6>
+										<h4>{{round($product->product_rate,1)}}</h4>
+										<h6>({{$product->reviews->count()}} Reviews)</h6>
 									</div>
 								</div>
 								<div class="col-6">
 									<div class="rating_list">
-										<h3>Based on 3 Reviews</h3>
+										<h3>Based on {{$product->reviews->count()}} Reviews</h3>
 										<ul class="list">
-											<li><a href="#">5 Star <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i
-													 class="fa fa-star"></i><i class="fa fa-star"></i> 01</a></li>
-											<li><a href="#">4 Star <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i
-													 class="fa fa-star"></i><i class="fa fa-star"></i> 01</a></li>
-											<li><a href="#">3 Star <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i
-													 class="fa fa-star"></i><i class="fa fa-star"></i> 01</a></li>
-											<li><a href="#">2 Star <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i
-													 class="fa fa-star"></i><i class="fa fa-star"></i> 01</a></li>
-											<li><a href="#">1 Star <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i
-													 class="fa fa-star"></i><i class="fa fa-star"></i> 01</a></li>
+											<li><a href="#">{{$product->reviews->where('rate',5)->count()}}x5 Star <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i></a></li>
+											<li><a href="#">{{$product->reviews->where('rate',4)->count()}}x4 Star <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i></a></li>
+											<li><a href="#">{{$product->reviews->where('rate',3)->count()}}x3 Star <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i></a></li>
+											<li><a href="#">{{$product->reviews->where('rate',2)->count()}}x2 Star <i class="fa fa-star"></i><i class="fa fa-star"></i></a></li>
+											<li><a href="#">{{$product->reviews->where('rate',1)->count()}}x1 Star <i class="fa fa-star"></i></a></li>
 										</ul>
 									</div>
 								</div>
 							</div>
 							<div class="review_list">
+								<div id="reviews" class="collapse">
+								@foreach ($product->reviews as $review)
 								<div class="review_item">
 									<div class="media">
 										<div class="d-flex">
-											<img src="img/product/review-1.png" alt="">
+											<img src="{!! asset('shop-assets/img/product/review-1.png')!!}" alt="">
 										</div>
 										<div class="media-body">
-											<h4>Blake Ruiz</h4>
+											<h4>{{$review->user->name}}</h4>
+											@for ($i = 0; $i < $review->rate; $i++)
 											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
+											@endfor
+										</div>
+										@if (Auth::check())
+										@if ($user->id == $review->user->id)
+										<div class="dropdown dropleft">
+										<button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown"></button>
+										<div class="dropdown-menu">
+											<a class="dropdown-item" data-toggle="modal" data-target="#modalEditReview-{{$review->id}}">Edit</a>
+											<a class="dropdown-item" data-toggle="modal" data-target="#modalDeleteReview-{{$review->id}}">Hapus</a>
 										</div>
 									</div>
-									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-										dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-										commodo</p>
-								</div>
-								<div class="review_item">
-									<div class="media">
-										<div class="d-flex">
-											<img src="img/product/review-2.png" alt="">
-										</div>
-										<div class="media-body">
-											<h4>Blake Ruiz</h4>
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-										</div>
+										@endif
+										@endif
 									</div>
-									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-										dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-										commodo</p>
+									<p>{{$review->content}}</p>
 								</div>
-								<div class="review_item">
-									<div class="media">
-										<div class="d-flex">
-											<img src="img/product/review-3.png" alt="">
-										</div>
-										<div class="media-body">
-											<h4>Blake Ruiz</h4>
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-											<i class="fa fa-star"></i>
-										</div>
-									</div>
-									<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-										dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-										commodo</p>
-								</div>
-							</div>
-						</div>
-						<div class="col-lg-6">
+								<br><br>
+
+{{-- Modal Delete Product --}}
+<div class="modal fade" id="modalDeleteReview-{{$review->id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="myModalLabel">Delete Confirmation</h4>
+            </div>
+            <div class="modal-body">
+                <form id="demo-form" class="form-horizontal mb-lg" novalidate="novalidate" method="POST" action="{{route('review.destroy',$review->id)}}">
+                    @method('DELETE')
+                    @csrf
+                    <div class="form-group mt-lg">
+                        <div class="text-center">
+                            <input type="hidden" name="idcategories" id="idcategories">
+                            <h5>Are you sure want to delete this product?</h5>
+                        </div>
+                    </div>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-danger">Yes</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+            </form>
+            </div>
+        </div>
+    </div>
+</div>
+{{-- end modal delete product --}}
+
+{{-- Modal Delete Product --}}
+<div class="modal fade" id="modalEditReview-{{$review->id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="myModalLabel"></h4>
+            </div>
+            <div class="modal-body">
+                <form id="demo-form" class="form-horizontal mb-lg" novalidate="novalidate" method="POST" action="{{route('review.update',$review->id)}}">
+                    @method('PATCH')
+										@csrf
+										<h3>Edit Review</h3>
+							<p>Your Rating:</p>
 							<div class="review_box">
-								<h4>Add a Review</h4>
-								<p>Your Rating:</p>
-								<ul class="list">
-									<li><a href="#"><i class="fa fa-star"></i></a></li>
-									<li><a href="#"><i class="fa fa-star"></i></a></li>
-									<li><a href="#"><i class="fa fa-star"></i></a></li>
-									<li><a href="#"><i class="fa fa-star"></i></a></li>
-									<li><a href="#"><i class="fa fa-star"></i></a></li>
-								</ul>
-								<p>Outstanding</p>
-                <form action="#/" class="form-contact form-review mt-3">
+								<select name="rate" id="rate">
+									<option value="5" @if ($review->rate == 5) selected  @endif>5</option>
+									<option value="4" @if ($review->rate == 4) selected  @endif>4</option>
+									<option value="3" @if ($review->rate == 3) selected  @endif>3</option>
+									<option value="2" @if ($review->rate == 2) selected  @endif>2</option>
+									<option value="1" @if ($review->rate == 1) selected  @endif>1</option>
+								</select>
+								<br><br>
                   <div class="form-group">
-                    <input class="form-control" name="name" type="text" placeholder="Enter your name" required>
+                    <textarea class="form-control different-control w-100" name="content" id="content" cols="30" rows="5" placeholder="Enter Message">{{$review->content}}</textarea>
                   </div>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-success">Yes</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+            </form>
+            </div>
+        </div>
+    </div>
+</div>
+								</div>
+{{-- end modal delete product --}}
+
+								@endforeach
+								</div>
+					</div>
+				</div>
+				
+						<div class="col-lg-6">
+							<form action="{{route('review.store')}}" method="POST" class="form-contact form-review mt-3">
+								@csrf
+							<h4>Add a Review</h4>
+							<p>Your Rating:</p>
+							<div class="review_box">
+								<input type="hidden" name="product_id" value="{{$product->id}}">
+								<select name="rate" id="rate">
+									<option value="5">5</option>
+									<option value="4">4</option>
+									<option value="3">3</option>
+									<option value="2">2</option>
+									<option value="1">1</option>
+								</select>
+								<br><br>
                   <div class="form-group">
-                    <input class="form-control" name="email" type="email" placeholder="Enter email address" required>
-                  </div>
-                  <div class="form-group">
-                    <input class="form-control" name="subject" type="text" placeholder="Enter Subject">
-                  </div>
-                  <div class="form-group">
-                    <textarea class="form-control different-control w-100" name="textarea" id="textarea" cols="30" rows="5" placeholder="Enter Message"></textarea>
+                    <textarea class="form-control different-control w-100" name="content" id="content" cols="30" rows="5" placeholder="Enter Message"></textarea>
                   </div>
                   <div class="form-group text-center text-md-right mt-3">
-                    <button type="submit" class="button button--active button-review">Submit Now</button>
+                    <button type="submit" name="submit" class="button button--active button-review">Submit Now</button>
                   </div>
                 </form>
 							</div>
 						</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<div class="form-group text-center text-md mt-3">
+						<a href="#reviews"  data-toggle="collapse" class="button button--active button-review">Show All Review</a>
 					</div>
 				</div>
 			</div>

@@ -36,6 +36,13 @@ Route::post('transaction/{transaction}','ShopController@upload_pop')->name('user
 Route::patch('transaction/{transaction}','ShopController@recieve')->name('user.recieve');
 Route::put('transaction/{transaction}','ShopController@cancel')->name('user.cancel');
 
+//Rating
+Route::resource('/review', 'ReviewController', [
+        'names' => [
+            'index' => 'review.index'
+        ]
+    ]);
+
 // Cart
 Route::get('/cart','ShopController@view_cart')->name('user.view_cart');
 Route::delete('/cart/{cart}','ShopController@delete_cart')->name('user.delete_cart');
