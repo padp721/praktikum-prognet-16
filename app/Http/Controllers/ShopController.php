@@ -12,6 +12,7 @@ use App\Transaction;
 use App\Transaction_Details;
 use App\RajaOngkir;
 use App\Product_Review;
+use App\Product_Categories;
 
 class ShopController extends Controller
 {
@@ -58,14 +59,15 @@ class ShopController extends Controller
     public function product_list()
     {
         $products = Product::get();
+        $product_categories = Product_Categories::get();
         if (Auth::check()) {
             $user = Auth::user();
             $cartcount = $this->cartcount($user->id);
             
             
-            return view('shop/product_list', compact('products','user','cartcount'));
+            return view('shop/product_list', compact('products','user','cartcount','product_categories'));
         }
-        return view('shop/product_list', compact('products'));
+        return view('shop/product_list', compact('products','product_categories'));
     }
 
     public function product_detail($id)
