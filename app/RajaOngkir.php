@@ -5,6 +5,7 @@ namespace App;
 use GuzzleHttp\Client;
 
 class RajaOngkir
+
 {
     public function getprovince(){
         $client = new Client();
@@ -13,7 +14,8 @@ class RajaOngkir
             $response = $client->get('https://api.rajaongkir.com/starter/province',
                 array(
                     'headers' => array(
-                        'key' => 'f31527a23b145a3ee7d0dbe88386c489'
+                        // 'key' => 'f31527a23b145a3ee7d0dbe88386c489'
+                        'key' => '4aedfe16f07180a2159fbd7da4f034a9'
                     )
                 )
             );
@@ -34,7 +36,8 @@ class RajaOngkir
             $response = $client->get('https://api.rajaongkir.com/starter/city',
                 array(
                     'headers' => array(
-                        'key' => 'f31527a23b145a3ee7d0dbe88386c489'
+                        // 'key' => 'f31527a23b145a3ee7d0dbe88386c489'
+                        'key' => '4aedfe16f07180a2159fbd7da4f034a9'
                     )
                 )
             );
@@ -57,7 +60,8 @@ class RajaOngkir
                     'body' => 'origin=114&destination='.$destination.'&weight=100&courier='.$courier.'',
                     'headers' => [
                         'content-type' => 'application/x-www-form-urlencoded',
-                        'key' => 'f31527a23b145a3ee7d0dbe88386c489'
+                        // 'key' => 'f31527a23b145a3ee7d0dbe88386c489'
+                        'key' => '4aedfe16f07180a2159fbd7da4f034a9'
                     ]
                 ]
             );

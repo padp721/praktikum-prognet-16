@@ -19,4 +19,9 @@ class Transaction extends Model
     {
         return $this->belongsToMany('App\Product', 'transaction_details', 'transaction_id', 'product_id')->withPivot('qty','discount','selling_price');
     }
+
+    public function user()
+    {
+        return $this->belongsTo('App\User');
+    }
 }

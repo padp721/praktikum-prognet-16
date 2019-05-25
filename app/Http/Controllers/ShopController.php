@@ -254,4 +254,11 @@ class ShopController extends Controller
 
         return back();
     }
+
+    public function recieve($id){
+        $transaction = Transaction::find($id);
+        $transaction->status = 'success';
+        $transaction->save();
+        return back();
+    }
 }

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Transaction;
+use App\RajaOngkir;
 
 class AdminTransactionController extends Controller
 {
@@ -15,6 +16,11 @@ class AdminTransactionController extends Controller
      * @return \Illuminate\Http\Response
      */
 
+    public function rajaongkir(){
+        $rajaongkir = new RajaOngkir();
+        return $rajaongkir;
+    }
+    
     public function __construct()
     {
         $this->middleware('auth:admin');
@@ -23,7 +29,10 @@ class AdminTransactionController extends Controller
     public function index()
     {
         $user = Auth::user();
-        return view('admin/Transaction/transaction', ['user'=>$user]);
+        $transaction = Transaction::get();
+        $city = $this->rajaongkir()->getcity();
+        $province = $this->rajaongkir()->getprovince();
+        return view('admin/Transaction/transaction', compact('user','transaction','city','province'));
     }
 
     /**
@@ -33,7 +42,7 @@ class AdminTransactionController extends Controller
      */
     public function create()
     {
-        //
+        
     }
 
     /**
@@ -66,7 +75,11 @@ class AdminTransactionController extends Controller
      */
     public function edit($id)
     {
-        //
+        $user = Auth::user();
+        $transaction = Transaction::find($id);
+        $city = $this->rajaongkir()->getcity();
+        $province = $this->rajaongkir()->getprovince();
+        return view('admin/Transaction/transaction_edit', compact('user','transaction','city','province'));
     }
 
     /**
@@ -78,7 +91,21 @@ class AdminTransactionController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $transaction = Transaction::find($id);
+
+        if($request->has('verify')){
+            $transaction->status = 'verified';
+            $transaction->save();
+        }
+        else if($request->has('deliver')){
+            $transaction->status = 'delivered';
+            $transaction->save();
+        }
+        else{
+            return back();
+        }
+
+        return back();
     }
 
     /**

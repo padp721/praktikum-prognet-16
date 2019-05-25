@@ -85,6 +85,15 @@
                           <img src="{{ asset('/storage/proof_of_payments/'.$transaction->proof_of_payment) }}" height="105" alt="">
                       </a>
                   </td>
+                  <td>
+                      @if($transaction->status == 'delivered')
+                      <form action="{{route('user.recieve', $transaction->id)}}" method="post">
+                        @method('PATCH')
+                        @csrf
+                        <input type="submit" class="btn btn-lg btn-success" value="Recieve Package" name="recieve" style="width:100%;height:100%">
+                      </form>
+                      @endif
+                  </td>
               </tr>
               @endif
             </table>

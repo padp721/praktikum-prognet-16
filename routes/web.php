@@ -33,6 +33,7 @@ Route::post('/product/{product}','ShopController@add_cart')->name('user.add_cart
 Route::get('/transactions','ShopController@transactions')->name('user.transactions');
 Route::get('/transaction/{transaction}','ShopController@transaction_detail')->name('user.transaction_detail');
 Route::post('transaction/{transaction}','ShopController@upload_pop')->name('user.upload_pop');
+Route::patch('transaction/{transaction}','ShopController@recieve')->name('user.recieve');
 
 // Cart
 Route::get('/cart','ShopController@view_cart')->name('user.view_cart');
