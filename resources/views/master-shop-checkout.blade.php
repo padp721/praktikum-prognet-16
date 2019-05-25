@@ -56,6 +56,7 @@
 									aria-expanded="false" href="#">{{$user->name}}<i class="fas fa-caret-down fa-fw"></i></a>
 										<ul class="dropdown-menu">
 											<li class="nav-item"><a class="nav-link" href="#">Edit Account</a></li>
+											<li class="nav-item"><a class="nav-link" href="{{route('user.transactions')}}">My Transaction</a></li>
 											<li class="nav-item"><a class="nav-link" href="{{route('user.logout')}}">Logout</a></li>
 										</ul>
 									</li>

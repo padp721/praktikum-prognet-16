@@ -56,6 +56,7 @@
 									aria-expanded="false" href="#">{{$user->name}}<i class="fas fa-caret-down fa-fw"></i></a>
 										<ul class="dropdown-menu">
 											<li class="nav-item"><a class="nav-link" href="#">Edit Account</a></li>
+											<li class="nav-item"><a class="nav-link" href="{{route('user.transactions')}}">My Transaction</a></li>
 											<li class="nav-item"><a class="nav-link" href="{{route('user.logout')}}">Logout</a></li>
 										</ul>
 									</li>
@@ -187,5 +188,40 @@ $("#qty1").on('change',function(){
   if(exist){
     alert(msg);
   }
+
+jQuery(document).ready(function($) {
+    $(".clickable-row").click(function() {
+        window.location = $(this).data("href");
+    });
+});
+
+// Set the date we're counting down to
+
+var countDownDate = new Date(document.getElementById("deadline").value).getTime();
+
+// Update the count down every 1 second
+var x = setInterval(function() {
+
+    // Get todays date and time
+    var now = new Date().getTime();
+    
+    // Find the distance between now an the count down date
+    var distance = countDownDate - now;
+    
+    // Time calculations for days, hours, minutes and seconds
+    var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+    
+    // Output the result in an element with id="demo"
+    document.getElementById("countdown").innerHTML = hours + "h "
+    + minutes + "m " + seconds + "s ";
+    
+    // If the count down is over, write some text 
+    if (distance < 0) {
+        clearInterval(x);
+        document.getElementById("countdown").innerHTML = "EXPIRED";
+    }
+}, 1000);
 
 </script>

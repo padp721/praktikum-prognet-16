@@ -179,6 +179,7 @@ class ShopController extends Controller
             $shipping_cost = $this->rajaongkir()->checkshipping($request->regency,strtolower($kurir->courier));
 
             $transaction = new Transaction();
+            $transaction->date = Carbon::now()->setTimezone('Asia/Singapore')->toDateString();
             $transaction->timeout = $timeout;
             $transaction->address = $request->address;
             $transaction->regency = $request->regency;
@@ -209,5 +210,48 @@ class ShopController extends Controller
 
         }
         return redirect(route('index'));
+    }
+
+    public function transactions(){
+        if(Auth::check()){
+            $user = Auth::user();
+            $transactions = Transaction::where('user_id',$user->id)->get();
+            $cartcount = $this->cartcount($user->id);
+            return view('shop/transactions', compact('user','transactions','cartcount'));
+        }
+        return redirect(route('index'));
+    }
+
+    public function transaction_detail($id){
+        if(Auth::check()){
+            $user = Auth::user();
+            $transaction = Transaction::find($id);
+            $cartcount = $this->cartcount($user->id);
+            $city = $this->rajaongkir()->getcity();
+            $province = $this->rajaongkir()->getprovince();
+            
+            return view('shop/transaction_detail', compact('user','transaction','cartcount','city','province'));
+        }
+        return redirect(route('index'));
+    }
+
+    public function upload_pop(Request $request, $id){
+
+        $this->validate($request,[
+            'proof_of_payment' => 'required|max:2048'
+        ]);
+
+        $transaction = Transaction::find($id);
+
+        $folderName = 'proof_of_payments';
+        $fileName = $id.'_';
+        $fileExtension = $request->proof_of_payment->getClientOriginalExtension();
+        $fileNameToStorage = $fileName.'_'.time().'.'.$fileExtension;
+        $filePath = $request->proof_of_payment->storeAs('public/'.$folderName , $fileNameToStorage);
+
+        $transaction->proof_of_payment = $fileNameToStorage;
+        $transaction->save();
+
+        return back();
     }
 }

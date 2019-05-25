@@ -30,6 +30,9 @@ Route::get('/','ShopController@index')->name('index');
 Route::get('/product_list','ShopController@product_list')->name('user.product_list');
 Route::get('/product/{product}','ShopController@product_detail')->name('user.product_detail');
 Route::post('/product/{product}','ShopController@add_cart')->name('user.add_cart');
+Route::get('/transactions','ShopController@transactions')->name('user.transactions');
+Route::get('/transaction/{transaction}','ShopController@transaction_detail')->name('user.transaction_detail');
+Route::post('transaction/{transaction}','ShopController@upload_pop')->name('user.upload_pop');
 
 // Cart
 Route::get('/cart','ShopController@view_cart')->name('user.view_cart');
