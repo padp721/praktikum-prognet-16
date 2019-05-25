@@ -210,7 +210,7 @@ class ShopController extends Controller
             $transaction->save();
 
         }
-        return redirect(route('index'));
+        return redirect(route('user.transaction_detail',$transaction->id));
     }
 
     public function transactions(){

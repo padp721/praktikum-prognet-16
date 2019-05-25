@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Transaction;
 use App\RajaOngkir;
+use App\Product;
 
 class AdminTransactionController extends Controller
 {
@@ -100,6 +101,12 @@ class AdminTransactionController extends Controller
         else if($request->has('deliver')){
             $transaction->status = 'delivered';
             $transaction->save();
+
+            foreach ($transaction->products as $product) {
+                $product->stock = $product->stock-$product->pivot->qty;
+                $product->save();
+            }
+            
         }
         else if($request->has('cancel')){
             $transaction->status = 'canceled';

@@ -45,7 +45,9 @@
                     <input type="hidden" name="deadline" id="deadline" value="{{$transaction->timeout}}">
                 </td>
                 <td>: 
-                    @if (!isset($transaction->proof_of_payment))
+                    @if ($transaction->status == 'canceled' && !isset($transaction->proof_of_payment))
+                        Canceled
+                    @elseif(!isset($transaction->proof_of_payment))
                         <span id="countdown"></span>
                     @elseif($transaction->status == 'canceled')
                         Your money will be returned.
@@ -66,7 +68,7 @@
           <div class="confirmation-card">
             <h3 class="billing-title">Proof of Payment</h3>
             <table class="order-rable">
-                @if (!isset($transaction->proof_of_payment))
+                @if (!isset($transaction->proof_of_payment) && $transaction->status == 'unverified')
               <tr>
                   <form enctype="multipart/form-data" method="post" action="{{route('user.upload_pop',$transaction->id)}}">
                     @csrf
@@ -81,6 +83,13 @@
               <tr>
                 <td><input style="margin-top:2%;" type="submit" class="btn btn-sm btn-success" name="upload" value="Upload"></td>
                 </form>
+                <td>
+                      <form action="{{route('user.cancel', $transaction->id)}}" method="post">
+                        @method('put')
+                        @csrf
+                        <input type="submit" class="btn btn-sm btn-danger" value="Cancel Purchase" name="cancel" style="width:100%;height:100%">
+                      </form>
+                </td>
               </tr>
               @else
               <tr>
