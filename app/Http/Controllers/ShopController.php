@@ -261,4 +261,11 @@ class ShopController extends Controller
         $transaction->save();
         return back();
     }
+
+    public function cancel($id){
+        $transaction = Transaction::find($id);
+        $transaction->status = 'canceled';
+        $transaction->save();
+        return back();
+    }
 }

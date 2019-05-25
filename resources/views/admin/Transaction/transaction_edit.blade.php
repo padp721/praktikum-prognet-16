@@ -92,7 +92,7 @@
                                 No Proof of Payment Uploaded.
                             @else
                                 <a href="{{ asset('/storage/proof_of_payments/'.$transaction->proof_of_payment) }}" target="_blank">
-                                    <img src="{{ asset('/storage/proof_of_payments/'.$transaction->proof_of_payment) }}" height="180" alt="">
+                                    <img src="{{ asset('/storage/proof_of_payments/'.$transaction->proof_of_payment) }}" width="180" alt="">
                                 </a>
                             @endif
                         </div>
@@ -104,14 +104,20 @@
                                     Can't verify without Proof of Payment.
                                 @elseif(isset($transaction->proof_of_payment) && $transaction->status == 'unverified')
                                     <input type="submit" class="btn btn-lg btn-success" value="Verify" name="verify" style="width:100%;height:100%">
+                                    <br><br>
+                                    <input type="submit" class="btn btn-lg btn-danger" value="Cancel Transaction" name="cancel" style="width:100%;height:100%">
                                 @elseif($transaction->status == 'verified')
                                     <input type="submit" class="btn btn-lg btn-success" value="Deliver" name="deliver" style="width:100%;height:100%">
+                                    <br><br>
+                                    <input type="submit" class="btn btn-lg btn-danger" value="Cancel Transaction" name="cancel" style="width:100%;height:100%">
                                 @elseif($transaction->status == 'delivered')
                                     Waiting until customer recieved the package.
                                 @elseif($transaction->status == 'success')
                                     Package has been successfully delivered.
                                 @elseif($transaction->status == 'expired')
                                     Your purchase has been expired.
+                                @elseif($transaction->status == 'canceled')
+                                    The purchase has been cancelled.
                                 @else
                                     Sorry, something went wrong.
                                 @endif
@@ -132,7 +138,7 @@
                 </header>
                 <div class="panel-body">
                     <div class="form-group">
-                        <label class="col-md-2 control-label" for="order_number">Buyer's Name</label>
+                        <label class="col-md-2 control-label" for="order_number">Mr./Mrs./Ms.</label>
                         <div class="col-md-10">
                             <input type="text" class="form-control" id="name" name="name" value="{{$transaction->user->name}}" disabled>
                         </div>

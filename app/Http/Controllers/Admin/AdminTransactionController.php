@@ -101,6 +101,10 @@ class AdminTransactionController extends Controller
             $transaction->status = 'delivered';
             $transaction->save();
         }
+        else if($request->has('cancel')){
+            $transaction->status = 'canceled';
+            $transaction->save();
+        }
         else{
             return back();
         }

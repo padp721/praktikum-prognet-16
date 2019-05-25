@@ -20,6 +20,8 @@
             Your purchase has been successful.
         @elseif($transaction->status == 'expired')
             Your purchase has been expired.
+        @elseif($transaction->status == 'canceled')
+            Your purchase has been canceled.
         @else
             Sorry, something went wrong.
         @endif
@@ -45,6 +47,8 @@
                 <td>: 
                     @if (!isset($transaction->proof_of_payment))
                         <span id="countdown"></span>
+                    @elseif($transaction->status == 'canceled')
+                        Your money will be returned.
                     @else
                         Paid Off
                     @endif 
@@ -91,6 +95,14 @@
                         @method('PATCH')
                         @csrf
                         <input type="submit" class="btn btn-lg btn-success" value="Recieve Package" name="recieve" style="width:100%;height:100%">
+                      </form>
+                      @endif
+                      @if($transaction->status == 'unverified' || $transaction->status == 'verified')
+                      <br><br>
+                      <form action="{{route('user.cancel', $transaction->id)}}" method="post">
+                        @method('put')
+                        @csrf
+                        <input type="submit" class="btn btn-lg btn-danger" value="Cancel Purchase" name="cancel" style="width:100%;height:100%">
                       </form>
                       @endif
                   </td>
