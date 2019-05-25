@@ -1,22 +1,31 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Product_Review;
-use App\Product;
+use App\Response;
 
-class ReviewController extends Controller
+class AdminResponseController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
+
+    public function __construct()
+    {
+        $this->middleware('auth:admin');
+    }
+
     public function index()
     {
-        //
+        $user = Auth::user();
+        $reviews = Product_Review::get();
+        return view('admin/Product_Review/product_review', compact('user','reviews'));
     }
 
     /**
@@ -24,9 +33,10 @@ class ReviewController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
     public function create()
     {
-        //
+        
     }
 
     /**
@@ -37,23 +47,12 @@ class ReviewController extends Controller
      */
     public function store(Request $request)
     {
-        if(Auth::check()){
-
-            $user = Auth::user();
-            $review = new Product_Review();
-            $review->product_id = $request->product_id;
-            $review->user_id = $user->id;
-            $review->rate = $request->rate;
-            $review->content = $request->content;
-            $review->save();
-
-            $average = Product_Review::where('product_id',$request->product_id)->avg('rate');
-            $avg = Product::find($request->product_id);
-            $avg->product_rate = $average;
-            $avg->save();
-
-            return back();
-        }
+        $user = Auth::user();
+        $response = new Response();
+        $response->review_id = $request->review_id;
+        $response->admin_id = $user->id;
+        $response->content = $request->content;
+        $response->save();
         return back();
     }
 
@@ -88,22 +87,7 @@ class ReviewController extends Controller
      */
     public function update(Request $request, $id)
     {
-        if(Auth::check()){
-            $review = Product_Review::find($id);
-            $product_id = $review->product_id;
-
-            $review->rate = $request->rate;
-            $review->content = $request->content;
-            $review->save();
-
-            $average = Product_Review::where('product_id',$product_id)->avg('rate');
-            $avg = Product::find($product_id);
-            $avg->product_rate = $average;
-            $avg->save();
-
-            return back();
-        }
-        return back();
+        //
     }
 
     /**
@@ -112,21 +96,20 @@ class ReviewController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
-        if(Auth::check()){
+        if($request->has('delrev')){
             $review = Product_Review::find($id);
-            $product_id = $review->product_id;
-
             $review->delete();
-
-            $average = Product_Review::where('product_id',$product_id)->avg('rate');
-            $avg = Product::find($product_id);
-            $avg->product_rate = $average;
-            $avg->save();
-
             return back();
         }
-        return back();
+        else if($request->has('delres')){
+            $response = Response::find($id);
+            $response->delete();
+            return back();
+        }
+        else{
+            return bakc();
+        }
     }
 }

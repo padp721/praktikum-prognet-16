@@ -61,7 +61,6 @@
                                             <td>{{$row->status}}</td>
                                             <td class="actions-fade">
                                                 <a href="{{route('transaction.edit',$row->id)}}" class="btn btn-default" role="button"><i class="fa fa-pencil"></i></a>
-										        <button class="btn btn-danger" data-toggle="modal" data-target="#modalDeleteProduct-{{ $row->id}}"><i class="fa fa-trash-o"></i></button>
 									        </td>
                                         </tr>
                                     @endforeach

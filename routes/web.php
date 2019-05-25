@@ -86,4 +86,10 @@ Route::group(['prefix' => 'admin'], function(){
             'index' => 'admin.categories'
         ]
     ]);
+
+    Route::resource('/response','Admin\AdminResponseController', [
+        'names' => [
+            'index' => 'admin.response'
+        ]
+    ]);
 });

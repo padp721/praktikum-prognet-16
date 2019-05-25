@@ -20,4 +20,9 @@ class Product_Review extends Model
     {
         return $this->belongsTo('App\Product');
     }
+
+    public function response()
+    {
+        return $this->hasMany('App\Response', 'review_id');
+    }
 }

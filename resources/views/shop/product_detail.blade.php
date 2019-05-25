@@ -100,29 +100,31 @@
 											<i class="fa fa-star"></i>
 											@endfor
 										</div>
-										@if (Auth::check())
-										@if ($user->id == $review->user->id)
+										
 										<div class="dropdown dropleft">
 										<button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown"></button>
 										<div class="dropdown-menu">
+											<a class="dropdown-item" data-toggle="modal" data-target="#modalContentAdmin-{{$review->id}}">Lihat Balasan Admin</a>
+										@if (Auth::check())
+										@if ($user->id == $review->user->id)
 											<a class="dropdown-item" data-toggle="modal" data-target="#modalEditReview-{{$review->id}}">Edit</a>
 											<a class="dropdown-item" data-toggle="modal" data-target="#modalDeleteReview-{{$review->id}}">Hapus</a>
+											@endif
+										@endif
 										</div>
 									</div>
-										@endif
-										@endif
 									</div>
 									<p>{{$review->content}}</p>
 								</div>
 								<br><br>
 
 {{-- Modal Delete Product --}}
-<div class="modal fade" id="modalDeleteReview-{{$review->id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade" style="margin-top:5%" id="modalDeleteReview-{{$review->id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                <h4 class="modal-title" id="myModalLabel">Delete Confirmation</h4>
+                <h4 class="modal-title" id="myModalLabel"></h4>
             </div>
             <div class="modal-body">
                 <form id="demo-form" class="form-horizontal mb-lg" novalidate="novalidate" method="POST" action="{{route('review.destroy',$review->id)}}">
@@ -131,7 +133,7 @@
                     <div class="form-group mt-lg">
                         <div class="text-center">
                             <input type="hidden" name="idcategories" id="idcategories">
-                            <h5>Are you sure want to delete this product?</h5>
+                            <h5>Are you sure want to delete this review?</h5>
                         </div>
                     </div>
             </div>
@@ -146,7 +148,7 @@
 {{-- end modal delete product --}}
 
 {{-- Modal Delete Product --}}
-<div class="modal fade" id="modalEditReview-{{$review->id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade" style="margin-top:5%" id="modalEditReview-{{$review->id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -182,6 +184,33 @@
 </div>
 								</div>
 {{-- end modal delete product --}}
+
+<!-- Modal content -->
+<div class="modal fade" style="margin-top:5%" id="modalContentAdmin-{{ $review->id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="myModalLabel"></h4>
+            </div>
+            <div class="modal-body">
+				@if ($review->response->isempty())
+					<h1>Tidak ada balasan</h1>
+				@else
+				@foreach ($review->response as $respon)
+					<h4>{{$respon->admin->name}}</h4>
+					<textarea class="form-control" name="desc" id="desc" rows="5" readonly>{{$respon->content}}</textarea>
+					<br>
+					@endforeach
+				@endif
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+{{-- end modal content --}}
 
 								@endforeach
 								</div>
