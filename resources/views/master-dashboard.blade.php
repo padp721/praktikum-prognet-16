@@ -79,6 +79,9 @@
 						<li>
 							<a href="#" class="dropdown-toggle notification-icon" data-toggle="dropdown">
 								<i class="fa fa-bell"></i>
+								@if (!$user->unreadNotifications->isEmpty())
+								<span class="badge">{{$user->unreadNotifications->count()}}</span>
+								@endif
 								{{-- <span class="badge">3</span> --}}
 							</a>
 			
@@ -90,40 +93,60 @@
 			
 								<div class="content">
 									<ul>
-										<li>
-											<a href="#" class="clearfix">
-												<div class="image">
-													<i class="fa fa-thumbs-down bg-danger"></i>
-												</div>
-												<span class="title">Server is Down!</span>
-												<span class="message">Just now</span>
-											</a>
-										</li>
-										<li>
-											<a href="#" class="clearfix">
-												<div class="image">
-													<i class="fa fa-lock bg-warning"></i>
-												</div>
-												<span class="title">User Locked</span>
-												<span class="message">15 minutes ago</span>
-											</a>
-										</li>
-										<li>
-											<a href="#" class="clearfix">
-												<div class="image">
-													<i class="fa fa-signal bg-success"></i>
-												</div>
-												<span class="title">Connection Restaured</span>
-												<span class="message">10/10/2014</span>
-											</a>
-										</li>
-									</ul>
+										@if ($user->unreadNotifications->isEmpty())
+											<li>
+												<a href="#" class="clearfix">
+													<span class="title">
+														Nothing to show.
+													</span>
+												</a>
+											</li>
+										@else
+											@foreach ($user->unreadNotifications as $notification)
+												<li>
+													<a href="{{route('admin.notification',$notification->id)}}" class="clearfix">
+														<span class="title">
+															@switch($notification->type)
+																@case('App\Notifications\UserCheckout')
+																	New Purchase!
+																	@break
+																@case('App\Notifications\UserUploadProof')
+																	New Proof of Payment Uploaded.
+																	@break
+																@case('App\Notifications\UserRecieve')
+																	Package has been arrived at customer location.
+																	@break
+																@case('App\Notifications\CancelPurchase')
+																	Purchase has been Cancelled by customer.
+																	@break
+																@case('App\Notifications\UserReview')
+																	New Review From Customer!
+																	@break
+																@default
+																	Something wrong happen.
+															@endswitch
+														</span>
+														@switch($notification->type)
+															@case('App\Notifications\UserReview')
+																<span class="message">Review ID : {{$notification->data['review_id']}}</span>
+																@break
+															@case('App\Notifications\UserCheckout' || 'App\Notifications\UserUploadProof' || 'App\Notifications\UserRecieve' || 'App\Notifications\CancelPurchase')
+																<span class="message">Transaction ID : {{$notification->data['transaction_id']}}</span>
+																@break
+															@default
+																Go on and fuck u'r self.
+														@endswitch
+													</a>
+												</li>								
+											@endforeach
 			
+												</ul>	
 									<hr />
 			
 									<div class="text-right">
-										<a href="#" class="view-more">View All</a>
-									</div>
+										<a href="#" class="view-more">Mark All As Read</a>
+									</div>		
+										@endif
 								</div>
 							</div>
 						</li>

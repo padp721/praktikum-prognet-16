@@ -46,4 +46,9 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\Product_Review');
     }
+
+    public function notifications()
+    {
+        return $this->morphMany(User_Notification::class, 'notifiable')->orderBy('created_at', 'desc');
+    }
 }

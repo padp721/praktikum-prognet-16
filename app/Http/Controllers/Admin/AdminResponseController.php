@@ -7,6 +7,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Product_Review;
 use App\Response;
+use App\Notifications\AdminResponse;
+use App\User;
+use Validator;
 
 class AdminResponseController extends Controller
 {
@@ -25,7 +28,8 @@ class AdminResponseController extends Controller
     {
         $user = Auth::user();
         $reviews = Product_Review::get();
-        return view('admin/Product_Review/product_review', compact('user','reviews'));
+        $check_admin = Response::where('admin_id', $user->id)->first();
+        return view('admin/Product_Review/product_review', compact('user','reviews','check_admin'));
     }
 
     /**
@@ -36,7 +40,7 @@ class AdminResponseController extends Controller
 
     public function create()
     {
-        
+
     }
 
     /**
@@ -47,12 +51,26 @@ class AdminResponseController extends Controller
      */
     public function store(Request $request)
     {
+        $validator = Validator::make($request->all(), [
+            'admin_id' => 'unique:response,admin_id'
+        ]);
+
+        if ($validator->fails()) {
+            return back()->with('admin','Anda sudah pernah membalas review ini.');
+        }
+
+
         $user = Auth::user();
         $response = new Response();
         $response->review_id = $request->review_id;
         $response->admin_id = $user->id;
         $response->content = $request->content;
         $response->save();
+
+        $response = Response::where('review_id', $request->review_id)->first();
+        
+        $response->review->user->notify(new AdminResponse($response));
+
         return back();
     }
 

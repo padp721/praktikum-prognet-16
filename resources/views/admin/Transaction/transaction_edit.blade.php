@@ -100,7 +100,9 @@
                             <form action="{{route('transaction.update',$transaction->id)}}" method="post">
                                 @method('PATCH')
                                 @csrf
-                                @if (!isset($transaction->proof_of_payment))
+                                @if (!isset($transaction->proof_of_payment) && $transaction->status == 'canceled')
+                                    The purchase has been cancelled.
+                                @elseif (!isset($transaction->proof_of_payment))
                                     Can't verify without Proof of Payment.
                                 @elseif(isset($transaction->proof_of_payment) && $transaction->status == 'unverified')
                                     <input type="submit" class="btn btn-lg btn-success" value="Verify" name="verify" style="width:100%;height:100%">

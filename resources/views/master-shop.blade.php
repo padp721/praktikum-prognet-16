@@ -41,10 +41,53 @@
             </ul>
 
             <ul class="nav-shop">
-							<li class="nav-item"><button><i class="ti-search"></i></button></li>
 							@if (Route::has('login'))
 							@auth
-								<li class="nav-item"><a href="{{route('user.view_cart')}}"><button><i class="ti-shopping-cart"></i><span class="nav-shop__circle">{{$cartcount}}</span></button></a></li>
+								<div class="dropdown">
+								<li><button class="nav-item dropdown-toggle" data-toggle="dropdown"><i class="ti-bell"></i>@if (!$user->unreadNotifications->isEmpty())<span class="nav-shop__circle">{{$user->unreadNotifications->count()}}</span>@endif</button>
+										<div class="dropdown-menu">
+											<div class="dropdown-header">Notifications</div>
+											@if ($user->unreadNotifications->isEmpty())
+											<a class="dropdown-item" href="#">Nothing to show.</a>
+											@else
+												@foreach ($user->unreadNotifications as $notification)
+													@switch($notification->type)
+															@case('App\Notifications\AdminResponse')
+															<div class="dropdown-divider"></div>
+																<a class="dropdown-item" href="{{route('user.notifications',$notification->id)}}">
+																	Your review was replied by admin.
+																	<p class="small">Product : {{$notification->data['product_name']}}</p>
+																</a>
+																@break
+															@case('App\Notifications\AdminVerify')
+															<div class="dropdown-divider"></div>
+																<a class="dropdown-item" href="{{route('user.notifications',$notification->id)}}">
+																	Your transaction has been verified.
+																	<p class="small">Transaction ID : {{$notification->data['transaction_id']}}</p>
+																</a>
+																@break
+															@case('App\Notifications\AdminDeliver')
+															<div class="dropdown-divider"></div>
+																<a class="dropdown-item" href="{{route('user.notifications',$notification->id)}}">
+																	Your package is delivered to your location.
+																	<p class="small">Transaction ID : {{$notification->data['transaction_id']}}</p>
+																</a>
+															@case('App\Notifications\CancelPurchase')
+															<div class="dropdown-divider"></div>
+																<a class="dropdown-item" href="{{route('user.notifications',$notification->id)}}">
+																	Your purchase has been cancelled by admin.
+																	<p class="small">Transaction ID : {{$notification->data['transaction_id']}}</p>
+																</a>
+																@break
+															@default
+																	
+													@endswitch
+												@endforeach
+											@endif
+										</div>
+									</li>
+								<li class="nav-item"><a href="{{route('user.view_cart')}}"><button><i class="ti-shopping-cart"></i>@if (!$cartcount == null)<span class="nav-shop__circle">{{$cartcount}}</span>@endif</button></a></li>
+								</div>
 							@endauth
 							@endif
             </ul>

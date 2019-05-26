@@ -13,7 +13,7 @@ class Response extends Model
 
     public function review()
     {
-        return $this->belongsTo('App\Product_Review', 'review_id');
+        return $this->belongsTo('App\Product_Review');
     }
 
     public function admin()

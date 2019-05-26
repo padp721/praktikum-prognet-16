@@ -8,6 +8,9 @@ use Illuminate\Support\Facades\Auth;
 use App\Transaction;
 use App\RajaOngkir;
 use App\Product;
+use App\Notifications\AdminVerify;
+use App\Notifications\AdminDeliver;
+use App\Notifications\CancelPurchase;
 
 class AdminTransactionController extends Controller
 {
@@ -97,6 +100,9 @@ class AdminTransactionController extends Controller
         if($request->has('verify')){
             $transaction->status = 'verified';
             $transaction->save();
+
+
+            $transaction->user->notify(new AdminVerify($transaction));
         }
         else if($request->has('deliver')){
             $transaction->status = 'delivered';
@@ -105,12 +111,17 @@ class AdminTransactionController extends Controller
             foreach ($transaction->products as $product) {
                 $product->stock = $product->stock-$product->pivot->qty;
                 $product->save();
+
+            $transaction->user->notify(new AdminDeliver($transaction));
             }
             
         }
         else if($request->has('cancel')){
             $transaction->status = 'canceled';
             $transaction->save();
+
+            
+            $transaction->user->notify(new CancelPurchase($transaction));
         }
         else{
             return back();

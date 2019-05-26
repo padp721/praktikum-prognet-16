@@ -13,6 +13,12 @@ use App\Transaction_Details;
 use App\RajaOngkir;
 use App\Product_Review;
 use App\Product_Categories;
+use App\Admin;
+use App\User_Notification;
+use App\Notifications\UserCheckout;
+use App\Notifications\UserUploadProof;
+use App\Notifications\UserRecieve;
+use App\Notifications\CancelPurchase;
 
 class ShopController extends Controller
 {
@@ -211,8 +217,15 @@ class ShopController extends Controller
             $transaction->sub_total = $sub_total;
             $transaction->save();
 
+            $admins = Admin::get();
+            foreach ($admins as $admin) {
+                $admin->notify(new UserCheckout($transaction));
+            }
+
+            return redirect(route('user.transaction_detail',$transaction->id));
         }
-        return redirect(route('user.transaction_detail',$transaction->id));
+        
+        return redirect(route('index'));
     }
 
     public function transactions(){
@@ -255,6 +268,11 @@ class ShopController extends Controller
         $transaction->proof_of_payment = $fileNameToStorage;
         $transaction->save();
 
+        $admins = Admin::get();
+        foreach ($admins as $admin) {
+            $admin->notify(new UserUploadProof($transaction));
+        }
+
         return back();
     }
 
@@ -262,6 +280,12 @@ class ShopController extends Controller
         $transaction = Transaction::find($id);
         $transaction->status = 'success';
         $transaction->save();
+
+        $admins = Admin::get();
+        foreach ($admins as $admin) {
+            $admin->notify(new UserRecieve($transaction));
+        }
+
         return back();
     }
 
@@ -269,6 +293,31 @@ class ShopController extends Controller
         $transaction = Transaction::find($id);
         $transaction->status = 'canceled';
         $transaction->save();
+
+        $admins = Admin::get();
+        foreach ($admins as $admin) {
+            $admin->notify(new CancelPurchase($transaction));
+        }
+
         return back();
+    }
+
+    public function read_notification($id){
+        $notification = User_Notification::find($id);
+        
+        switch ($notification->type) {
+            case 'App\Notifications\AdminResponse':
+                $notification->markAsRead();
+                return redirect(route('user.product_detail',$notification->data['product_id']));
+                break;
+            case 'App\Notifications\AdminVerify' || 'App\Notifications\AdminDeliver' || 'App\Notifications\CancelPurchase':
+                $notification->markAsRead();
+                return redirect(route('user.transaction_detail',$notification->data['transaction_id']));
+                break;
+            
+            default:
+                # code...
+                break;
+        }
     }
 }

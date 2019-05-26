@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Product_Review;
 use App\Product;
+use App\Notifications\UserReview;
+use App\Admin;
 
 class ReviewController extends Controller
 {
@@ -26,7 +28,7 @@ class ReviewController extends Controller
      */
     public function create()
     {
-        //
+        
     }
 
     /**
@@ -51,6 +53,16 @@ class ReviewController extends Controller
             $avg = Product::find($request->product_id);
             $avg->product_rate = $average;
             $avg->save();
+
+            $review = Product_Review::where('product_id',$request->product_id)
+                                        ->where('user_id', $user->id)
+                                        ->orderby('id', 'desc')
+                                        ->first();
+
+            $admins = Admin::get();
+            foreach ($admins as $admin) {
+                $admin->notify(new UserReview($review));
+            }
 
             return back();
         }

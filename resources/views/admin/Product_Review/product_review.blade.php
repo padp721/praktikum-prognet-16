@@ -19,6 +19,12 @@
     <!-- start: page -->
     <div class="row">
         <div class="col">
+            @if (session('admin'))
+                        <div class="alert alert-danger">
+                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                            {{ session('admin') }}
+                        </div>
+                    @endif
             <section class="panel">
                 <header class="panel-heading">
                     <div class="panel-actions">
@@ -54,8 +60,8 @@
                                             <td>{{$review->rate}}</td>
                                             <td>
                                                 <button class="btn btn-default" data-toggle="modal" data-target="#modalContent-{{ $review->id}}">Load Review</button>
-                                                @if ($review->has('response'))
-                                                <button class="btn btn-default" data-toggle="modal" data-target="#modalContentAdmin-{{ $review->id}}">Load Response</button>
+                                                @if (!$review->response->isEmpty())
+                                                    <button class="btn btn-default" data-toggle="modal" data-target="#modalContentAdmin-{{ $review->id}}">Load Response</button>
                                                 @endif
                                             </td>
                                             <td class="actions-fade">
@@ -83,9 +89,8 @@
 </div>
 {{-- end modal content --}}
 
-@if ($review->has('response'))
 <!-- Modal content -->
-<div class="modal fade" id="modalContentAdmin-{{ $review->id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade" id="modalContentAdmin-{{$review->id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -112,7 +117,6 @@
     </div>
 </div>
 {{-- end modal content --}}
-@endif
 
 {{-- Modal Delete Review --}}
 <div class="modal fade" id="modalDeleteReview-{{$review->id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -158,6 +162,7 @@
 							<p>Your Response</p>
 							<div class="review_box">
                                 <input type="hidden" name="review_id" value="{{$review->id}}">
+                                <input type="hidden" name="admin_id" value="{{$user->id}}">
                   <div class="form-group">
                     <textarea class="form-control different-control w-100" name="content" id="content" cols="30" rows="5" placeholder="Enter Message"></textarea>
                   </div>

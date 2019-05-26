@@ -100,19 +100,20 @@
 											<i class="fa fa-star"></i>
 											@endfor
 										</div>
-										
+										@if (!$review->response->isEmpty() || $user->id == $review->user->id)
 										<div class="dropdown dropleft">
 										<button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown"></button>
 										<div class="dropdown-menu">
+										@if (!$review->response->isEmpty())
 											<a class="dropdown-item" data-toggle="modal" data-target="#modalContentAdmin-{{$review->id}}">Lihat Balasan Admin</a>
-										@if (Auth::check())
+											@endif
 										@if ($user->id == $review->user->id)
 											<a class="dropdown-item" data-toggle="modal" data-target="#modalEditReview-{{$review->id}}">Edit</a>
 											<a class="dropdown-item" data-toggle="modal" data-target="#modalDeleteReview-{{$review->id}}">Hapus</a>
 											@endif
-										@endif
 										</div>
 									</div>
+									@endif
 									</div>
 									<p>{{$review->content}}</p>
 								</div>
@@ -194,14 +195,14 @@
                 <h4 class="modal-title" id="myModalLabel"></h4>
             </div>
             <div class="modal-body">
-				@if ($review->response->isempty())
+				@if (!isset($review->response))
 					<h1>Tidak ada balasan</h1>
 				@else
 				@foreach ($review->response as $respon)
 					<h4>{{$respon->admin->name}}</h4>
 					<textarea class="form-control" name="desc" id="desc" rows="5" readonly>{{$respon->content}}</textarea>
 					<br>
-					@endforeach
+				@endforeach
 				@endif
             </div>
             <div class="modal-footer">
@@ -233,7 +234,7 @@
 								</select>
 								<br><br>
                   <div class="form-group">
-                    <textarea class="form-control different-control w-100" name="content" id="content" cols="30" rows="5" placeholder="Enter Message"></textarea>
+                    <textarea class="form-control different-control w-100" name="content" id="content" cols="30" rows="5" placeholder="Enter Message" required></textarea>
                   </div>
                   <div class="form-group text-center text-md-right mt-3">
                     <button type="submit" name="submit" class="button button--active button-review">Submit Now</button>

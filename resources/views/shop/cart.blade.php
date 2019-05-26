@@ -21,13 +21,22 @@
                       </thead>
                       <tbody>
                           <form action="{{route('user.checkout')}}" id="checkout" method="POST">@csrf</form>
-                          {{$i = 0}}
+                          @if ($cartcount == null)
+                              <tr>
+                                  <td colspan="6">
+                                      <center><h2>Tidak ada item</h2></center>
+                                  </td>
+                              </tr>
+                          @endif
+                          @php
+                              $i = 0
+                          @endphp
                           @foreach ($cart as $item)
                               <tr>
                                 <td>
                                     <div class="media">
                                         <div class="d-flex">
-                                            <img src="img/cart/cart1.png" alt="">
+                                            <img src="{{ asset('/storage/product_image/'.$item->product->product_images->first()->image_name) }}" height="100" width="100" alt="">
                                         </div>
                                         <div class="media-body">
                                             <p>{{$item->product->product_name}}</p>
@@ -56,7 +65,9 @@
                                     </form>
                                 </td>
                             </tr>
-                            {{$i++}}
+                            @php
+                                $i++
+                            @endphp
                           @endforeach 
                           <tr class="out_button_area">
                               <td class="d-none-l">
@@ -71,7 +82,9 @@
                               <td>
                                   <div class="checkout_btn_inner d-flex align-items-center">
                                       <a class="gray_btn" href="{{route('user.product_list')}}">Continue Shopping</a>
+                                      @if ($cartcount)
                                       <input form="checkout" type="submit" value="Proceed to checkout" class="primary-btn ml-2">
+                                      @endif
                                   </div>
                               </td>
                           </tr>
