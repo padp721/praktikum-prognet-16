@@ -144,7 +144,7 @@
 									<hr />
 			
 									<div class="text-right">
-										<a href="#" class="view-more">Mark All As Read</a>
+										<a href="{{route('admin.forget_notification')}}" class="view-more">Mark All As Read</a>
 									</div>		
 										@endif
 								</div>

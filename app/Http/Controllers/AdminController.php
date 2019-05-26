@@ -27,6 +27,7 @@ class AdminController extends Controller
      */
     public function index(){
         $user = Auth::user();
+        // return $user->notifications;
         // echo $user;
         return view('admin/dashboard', ['user'=>$user]);
     }
@@ -48,5 +49,11 @@ class AdminController extends Controller
                 return back();
                 break;
         }
+    }
+
+    public function read_all(){
+        $user = Auth::user();
+        $user->unreadNotifications->markAsRead();
+        return back();
     }
 }

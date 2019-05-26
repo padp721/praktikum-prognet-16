@@ -36,6 +36,7 @@ Route::post('transaction/{transaction}','ShopController@upload_pop')->name('user
 Route::patch('transaction/{transaction}','ShopController@recieve')->name('user.recieve');
 Route::put('transaction/{transaction}','ShopController@cancel')->name('user.cancel');
 Route::get('notifications/{notifications}','ShopController@read_notification')->name('user.notifications');
+Route::get('readall','ShopController@read_all')->name('user.forget_notification');
 
 //Rating
 Route::resource('/review', 'ReviewController', [
@@ -58,6 +59,7 @@ Route::group(['prefix' => 'admin'], function(){
     Route::get('/logout','AdminAuth\LoginController@logout')->name('admin.logout');
     Route::get('/', 'AdminController@index')->name('admin.dashboard');
     Route::get('/read_notification/{read_notification}', 'AdminController@read_notification')->name('admin.notification');
+    Route::get('/readall','AdminController@read_all')->name('admin.forget_notification');
 
     Route::resource('/user','Admin\AdminUserController', [
         'names' => [

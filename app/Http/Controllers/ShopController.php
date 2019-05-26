@@ -320,4 +320,10 @@ class ShopController extends Controller
                 break;
         }
     }
+
+    public function read_all(){
+        $user = Auth::user();
+        $user->unreadNotifications->markAsRead();
+        return back();
+    }
 }

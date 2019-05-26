@@ -80,9 +80,13 @@
 																</a>
 																@break
 															@default
-																	
+																	Go on and fuck u'r self.
 													@endswitch
 												@endforeach
+												<div class="dropdown-divider"></div>
+													<a class="dropdown-item" href="{{route('user.forget_notification')}}">
+														<p class="small">Mark all as Read</p>
+													</a>
 											@endif
 										</div>
 									</li>
