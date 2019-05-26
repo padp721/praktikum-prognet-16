@@ -25,10 +25,42 @@
                     <div class="panel-actions">
                         <a href="#" class="fa fa-caret-down"></a>
                     </div>
+                    <h2 class="panel-title">Filter Monthly Report</h2>
+                </header>
+								<div class="panel-body">
+                  <div class="row">
+                        <form method="POST" class="form-inline float-right">
+                        @csrf
+                    <div class="col-md-8">
+                        <input type="text" style="width:100%" class="form-control float-right" name="tahun" required placeholder="Tahun">
+                    </div>
+                    <div class="col-md-2">
+                        <button style="width:100%" class="btn btn-default" type="Submit"><i class="fa fa-search"></i><span>Cari</span></button>
+                    </div>
+                    <div class="col-md-2">
+                        <a href="{{route('report.bulanan.now')}}"><button style="width:100%" class="btn btn-default" type="button">Tahun Ini</button></a>
+                    </div>
+                        </form>
+
+                  </div>
+								</div>
+            </section>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col">
+            <section class="panel">
+                <header class="panel-heading">
+                    <div class="panel-actions">
+                        <a href="#" class="fa fa-caret-down"></a>
+                    </div>
                     <h2 class="panel-title">Monthly Transaction Chart</h2>
                 </header>
 								<div class="panel-body">
-                  
+                  <div style="margin: 3%;">
+                  {!! $chart->container() !!}
+                  </div>
 								</div>
             </section>
         </div>
@@ -91,9 +123,9 @@
                                     <td>Desember</td>
                                   @endif
                                             <td>{{$row->tahun}}</td>
-                                            <td>{{$row->income}}</td>
-                                            <td>{{$row->shipping_cost}}</td>
-                                            <td>{{$row->clean_income}}</td>
+                                            <td>Rp {{number_format($row->income)}}</td>
+                                            <td>Rp {{number_format($row->shipping_cost)}}</td>
+                                            <td>Rp {{number_format($row->clean_income)}}</td>
                                         </tr>
                                     @endforeach
                                 @endif
@@ -106,3 +138,6 @@
 </section>
 
 @endsection
+@section ('chart')
+            {!! $chart->script() !!}
+            @endsection

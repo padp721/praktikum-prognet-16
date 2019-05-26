@@ -51,15 +51,7 @@ class AdminResponseController extends Controller
      */
     public function store(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'admin_id' => 'unique:response,admin_id'
-        ]);
-
-        if ($validator->fails()) {
-            return back()->with('admin','Anda sudah pernah membalas review ini.');
-        }
-
-
+        
         $user = Auth::user();
         $response = new Response();
         $response->review_id = $request->review_id;

@@ -337,6 +337,8 @@
 			<script src="{!! asset('dashboard-assets/vendor/bootstrap-maxlength/bootstrap-maxlength.js')!!}"></script>
 			<script src="{!! asset('dashboard-assets/vendor/ios7-switch/ios7-switch.js')!!}"></script>
 			<script src="{!! asset('dashboard-assets/vendor/owl-carousel/owl.carousel.js')!!}"></script>
+			<script src="https://cdnjs.cloudflare.com/ajax/libs/highcharts/6.0.6/highcharts.js" charset="utf-8"></script>
+			@yield ('chart')
 			
 			<!-- Theme Base, Components and Settings -->
 			<script src="{!! asset('dashboard-assets/javascripts/theme.js')!!}"></script>
