@@ -112,8 +112,8 @@ class AdminTransactionController extends Controller
                 $product->stock = $product->stock-$product->pivot->qty;
                 $product->save();
 
-            $transaction->user->notify(new AdminDeliver($transaction));
             }
+            $transaction->user->notify(new AdminDeliver($transaction));
             
         }
         else if($request->has('cancel')){

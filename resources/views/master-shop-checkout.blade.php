@@ -72,6 +72,7 @@
 																	Your package is delivered to your location.
 																	<p class="small">Transaction ID : {{$notification->data['transaction_id']}}</p>
 																</a>
+																@break
 															@case('App\Notifications\CancelPurchase')
 															<div class="dropdown-divider"></div>
 																<a class="dropdown-item" href="{{route('user.notifications',$notification->id)}}">
