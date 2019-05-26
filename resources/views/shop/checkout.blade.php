@@ -13,7 +13,7 @@
                       <thead>
                           <tr>
                               <th scope="col">Provinsi</th>
-                              <th scope="col">Kabupaten</th>
+                              <th scope="col">Kabupaten/Kota</th>
                               <th scope="col">Alamat</th>
                               <th scope="col">Kurir</th>
                           </tr>
