@@ -96,4 +96,14 @@ Route::group(['prefix' => 'admin'], function(){
             'index' => 'admin.response'
         ]
     ]);
+
+    Route::group(['prefix'=>'report'],function(){
+
+        Route::get('bulanan','Admin\AdminReportController@thisMonth')->name('report.bulanan.now');
+        Route::post('bulanan','Admin\AdminReportController@monthly')->name('report.bulanan');
+
+        Route::get('tahunan','Admin\AdminReportController@thisYear')->name('report.tahunan.now');
+        Route::post('tahunan','Admin\AdminReportController@yearly')->name('report.tahunan');
+    });
+
 });

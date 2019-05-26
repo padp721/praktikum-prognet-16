@@ -236,6 +236,24 @@
 											<span>Transaction</span>
 										</a>
 									</li>
+									<li class="nav-parent">
+										<a>
+											<i class="fa fa-book" aria-hidden="true"></i>
+											<span>Report</span>
+										</a>
+										<ul class="nav nav-children">
+											<li>
+												<a href="{{route('report.bulanan.now')}}">
+													 Monthly
+												</a>
+											</li>
+											<li>
+												<a href="{{route('report.tahunan.now')}}">
+													 Yearly
+												</a>
+											</li>
+										</ul>
+									</li>
 									<li>
 										<a href="{{route('admin.courier')}}">
 											<i class="fa fa-truck" aria-hidden="true"></i>
